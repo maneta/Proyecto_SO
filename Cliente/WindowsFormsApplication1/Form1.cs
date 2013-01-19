@@ -16,7 +16,7 @@ namespace WindowsFormsApplication1
     {
         Socket server;  // Defino variables para guardar los  threads y los formularios.
         Form2 login;
-        Form3 users;
+        //Form3 users;
         Form4 consultas;
         
         string us;
@@ -71,8 +71,8 @@ namespace WindowsFormsApplication1
         private void activar_formulario_usuarios(string us)
         {
             //Este thread lo único que hace es activar el formulario de jugar o consultar
-            users = new Form3(server, us);
-            users.ShowDialog();
+            //users = new Form3(server, us);
+            //users.ShowDialog();
         }
 
         private void activar_formulario_consultas(string us)
