@@ -75,6 +75,11 @@ namespace WindowsFormsApplication1
             login = new Form2(server);
             login.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
               
     }
 }

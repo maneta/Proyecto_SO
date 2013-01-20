@@ -60,5 +60,13 @@ namespace WindowsFormsApplication1
             string mensaje = Encoding.ASCII.GetString(msg2);
             MessageBox.Show(mensaje); */
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            String logoff = "100 " + this.Text ;
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(logoff);
+            server.Send(msg);
+            this.Close();
+        }
     }
 }
