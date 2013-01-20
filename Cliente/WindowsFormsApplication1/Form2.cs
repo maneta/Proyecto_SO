@@ -93,8 +93,8 @@ namespace WindowsFormsApplication1
 
                             break;
                         case 2:// Recido del servidor el mensaje con un valor de op=11 que querrá decir, caso 1, error 1.
-                            MessageBox.Show("Ya te digo yo que tienes un problema con el usuario o el password!, si no lo pones bien vas a suspender...");
                             LOGIN = -2;
+                            MessageBox.Show("Ya te digo yo que tienes un problema con el usuario o el password!, si no lo pones bien vas a suspender...");
                             break;
 
                         case 3: // Activo formulario y thread en el que llamo a las consultas
@@ -146,19 +146,22 @@ namespace WindowsFormsApplication1
         private void button2_Click(object sender, EventArgs e)
         {
             Boolean control = true;
+            int i = 0;
             String usuarioContraseña = "2 " + usuario.Text + " " + contraseña.Text;
             byte[] msg = System.Text.Encoding.ASCII.GetBytes(usuarioContraseña);
             server.Send(msg);
+            
             while (control)
             {
                 if (LOGIN == -2)
                 {
                     control = false;
+                    Thread.Sleep(500);
                 }
                 if (LOGIN == 0)
                 {
-                    this.Hide();
                     control = false;
+                    this.Hide();
                 }
             }
         }
