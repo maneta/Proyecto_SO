@@ -769,7 +769,10 @@ void *usuarios(void *conector)
        code=identify(buf);
        printf("el codigo es: %d\n",code);
        } /*fin del while*/
-
+       
+       
+       sprintf (MENSAJE_A_CLIENTE,"100 %s ",usuario);
+       write(con,MENSAJE_A_CLIENTE,strlen(MENSAJE_A_CLIENTE));
        /*Cerramos el socket, Matamos el Threads y decrementamos el numero de Threads usados*/
        close(con);
        pthread_exit(NULL);
