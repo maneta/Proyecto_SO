@@ -101,16 +101,20 @@ namespace WindowsFormsApplication1
                             MessageBox.Show("Ya te digo yo que tienes un problema con el usuario o el password!, si no lo pones bien vas a suspender...");
                             break;
 
-                        case 3: // Activo formulario y thread en el que llamo a las consultas
+                        case 3: 
+                            
+                        // Activo formulario y thread en el que llamo a las consultas
                             // pongo en marcha el thread que activa el formulario de usuarios conectados y consultas
+                            
                             LOGIN = 0;
                             ThreadStart ts4 = delegate { activar_formulario_consultas(this.us); };
                             Thread t4 = new Thread(ts4);
                             t4.Start();
                             break;
 
-                        case 4: // Aqui debería de recibir el listado de conectados
-
+                        case 4: 
+                            // Aqui debería de recibir el listado de conectados
+                            //PRIMEIRO ENVIA MENSAGEM COM A OP E DEPOIS COM A INFO BIZARRO 
                             byte[] msg2 = new byte[80];
                             server.Receive(msg2);
                             string consulta_ganadores = Encoding.ASCII.GetString(msg2);
