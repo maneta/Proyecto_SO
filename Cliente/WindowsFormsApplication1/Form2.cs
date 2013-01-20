@@ -18,6 +18,7 @@ namespace WindowsFormsApplication1
         //Form3 users;
         Form4 consultas;
         string us;
+        string USER;
         int LOGIN = -1;
  
         public Form2(Socket s)
@@ -47,7 +48,9 @@ namespace WindowsFormsApplication1
         private void activar_formulario_consultas(string us)
         {
             //Activo el thread del formulario de las diferentes consultas
+           
             consultas = new Form4(server);
+            consultas.Text = USER;
             consultas.ShowDialog();
         }
  
@@ -146,7 +149,7 @@ namespace WindowsFormsApplication1
         private void button2_Click(object sender, EventArgs e)
         {
             Boolean control = true;
-            int i = 0;
+            USER = usuario.Text;
             String usuarioContraseña = "2 " + usuario.Text + " " + contraseña.Text;
             byte[] msg = System.Text.Encoding.ASCII.GetBytes(usuarioContraseña);
             server.Send(msg);
@@ -156,7 +159,7 @@ namespace WindowsFormsApplication1
                 if (LOGIN == -2)
                 {
                     control = false;
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                 }
                 if (LOGIN == 0)
                 {
