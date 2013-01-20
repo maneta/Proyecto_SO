@@ -4,9 +4,8 @@
  *Ernesto Jimenez
  *Christian Lopez
  */
-//programa en C para crear una base de datos
+
 #include <my_global.h>
-//incluir esta libreria para poder hacer las llamadas
 #include <string.h>
 #include <mysql.h>
 #include <time.h>
@@ -24,26 +23,9 @@
 #include <pthread.h>
 
 #define MAX 200
-#define MAX_THREADS	10
+#define MAX_THREADS 10
 
-
-//..........Defino variables globales.....//
-
-
-MYSQL *conn;
-MYSQL_RES *resultado;
-MYSQL_ROW row;
-pthread_mutex_t semaforo; // Declaro la variable global "semaforo" del tipo pthread_mutex_t.
-int T; //Contador Global threads
-char MENSAJE_A_CLIENTE[50];
-char MENSAJE_RESPUESTA [80];
-char NOMBRE[20];
-int con;
-
-
-
-
-//........ Inicio de las estructuras .......
+/*........ Inicio de las estructuras .......*/
 
 typedef struct {
 
@@ -52,19 +34,28 @@ typedef struct {
  } Tusuario;
 
  typedef struct {
-       // numero de usuarios en la lista
        int num;
-       // defino a una variable char llamada "usuarios" de tipo Tusuario
        Tusuario usuarios [MAX];
  } Tlista;
 
 /*.........Fin de las estructuras........*/
 
-
 /*Asignacion Global de la Lista*/
 
 Tlista mi_lista;
 Tusuario t;
+
+/*........Defino variables globales.....*/
+
+MYSQL *conn;
+MYSQL_RES *resultado;
+MYSQL_ROW row;
+
+/* Declaro la variable global "semaforo" del tipo pthread_mutex_t.*/
+pthread_mutex_t semaforo; 
+
+/*Contador Global threads*/
+int T; 
 
 void crea_base_datos()
 {
@@ -488,12 +479,10 @@ char* lista_ganadores(char buf[MAX])
 
   //........... Funciones de las diferentes estructuras.....
 
+
 void inicializa_lista (Tlista *l)
 {  
-  /* le paso como referencia una variable tipo puntero llamada l que apunta a la estructura Tlista,
-   * me servira como variabla para poder guardar lo que yo quiera dentro de la estructura.
-   * Pone a 0 el numero de usuarios de la lista
-   */
+       /*Pone a 0 el numero de usuarios de la lista*/
        l->num=0;
 }
 
@@ -501,11 +490,9 @@ void inicializa_lista (Tlista *l)
 
 int pon_usuario (Tlista *l, Tusuario u)
  {
-  
-       /* Anade el usuario u al final de la lista.
-       * Devuelve 0 si todo bien y -1 si no hay espacio en la lista
-       */
-  
+/* Anade el usuario u al final de la lista.
+ * Devuelve 0 si todo bien y -1 si no hay espacio en la lista
+ */
        if (l->num==MAX)
   	      return -1;
        else
@@ -532,24 +519,33 @@ void escribir_lista (Tlista l)
 
 
 
-  void construir_lista (Tlista l, char mensaje[80])
+void construir_lista (Tlista l, int con)
   /* Construye un mensaje de texto con los nombre de los usuarios que
      hay en la lista l, separados por una coma */
-  {
+{
+       
        int i=1;
+       //int con = (int) conn;
+       char mensaje[80];
+       char mensaje_a_cliente[80];
        strcpy (mensaje, l.usuarios[0].nombre);
-    printf("Estoy dentro de construir lista \n");
+       printf("Estoy dentro de construir lista \n");
        while (i<l.num)
        {
   	      sprintf (mensaje, "%s,%s",mensaje,l.usuarios[i].nombre);
   	      i++;
        }
-    sprintf(MENSAJE_A_CLIENTE,"4 %s",mensaje);
-    write(con,MENSAJE_A_CLIENTE,strlen(MENSAJE_A_CLIENTE));
-    printf("%s \n",MENSAJE_A_CLIENTE);
-  }
+       //printf("El Valor de mensaje: %s \n", mensaje);
+       sprintf (mensaje_a_cliente,"4 %s,",mensaje);
+       //printf("El Valor de mensaje_a_cliente: %s  y con: %d \n", mensaje_a_cliente,con);
+       write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
+       write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
+    /* RETORNAR LA LISTA Y HACER WRITE DESDE EL THREAD QUE TOCA
+     * BIZARRO MANDAR DUAS MENSSAGENS, DEUS ME LIVRE! 
+     */
+}
 
-int buscar (char nombre[10], Tlista l)
+int buscar (char nombre[20], Tlista l)
 { 
        /* Devuelve la posiciÃƒÂ³n que ocupa en la lista el usuario cuyo nombre se recibe
         * como parÃƒÂ¡metro. Si el usuario no estÃƒÂ¡ en la lista devuelve un -1
@@ -576,7 +572,6 @@ int eliminar (int i, Tlista *l)
         * Devuelve 0 si ok y -1 si no hay usuario en la posiciÃƒÂ³n i
         */
 
-       printf("Estoy en la funcion de eliminar a un usuario\n");
        int j;
        if (i>= MAX)
 	      return -1;
@@ -598,25 +593,19 @@ void *usuarios(void *conector)
 {
 
        printf("dentro de Usuarios \n");
-       // Defino las variables que utilizarÃƒÂ© en el programa principal
-       int s, code;
-       //int con;
-       int nchar,remote_addr_len;
-       char mensaje[MAX];
-       char *datos1;
-       char *datos2;
-       struct sockaddr_in serv_adr, remote_addr;
+       int code;
+       int nchar;
        static char buf[MAX];
-       char mensaje2[MAX];
+       //char mensaje2[MAX];
        int resultado;
-       int contador;
        char usuario [80];
-
+       char mensaje_a_cliente[50];
+       //char *mensaje_respuesta;
+       
        /*Haciendo la conversion del SocketID pasado por argumento*/
-       con = (int) conector;
+       int con = (int) conector;
 
 
-       char msge_lista [100];
 
        /* Se pasa el valor de con por puntero, no se guarda en variable local y se llama directamente
         * hay que resvisar*/
@@ -645,24 +634,19 @@ void *usuarios(void *conector)
 	             printf("Estas en el caso 1 introducir usuario \n");
 	             resultado=new_user(buf);
 	             if(resultado==0){
-
-			    /***** Con el mutex_lock logramos que todos los threads que ejecuten esa misma funciÃƒÂ³n despues
-			    de un primero, queden bloquedos hasta que el primer thread que ha ejecutado esa funciÃƒÂ³n
-			    termine su acciÃƒÂ³n ****/
-	                    
                             pthread_mutex_lock(&semaforo);
-	                    //tabla_partida(buf);
-	                    sprintf (MENSAJE_A_CLIENTE,"1 ");
-                            write(con,MENSAJE_A_CLIENTE,strlen(MENSAJE_A_CLIENTE));
-                            pthread_mutex_unlock(&semaforo); // A partir de este momento un siguiente thread podrÃƒÂ¡ ejecutar esa misma funciÃƒÂ³n
+	                    /*tabla_partida(buf);*/
+	                    sprintf (mensaje_a_cliente,"1 ");
+                            write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
+                            pthread_mutex_unlock(&semaforo); 
                      }else{
-			    sprintf (mensaje2,"Usuario no se ha introducido correctamente");
+			    //sprintf (mensaje2,"Usuario no se ha introducido correctamente");
 	                    
                             /*con no existe en el contesto actual como variable, el argumento no se ha guardado
                              *en una variable local*/
-                            sprintf (MENSAJE_A_CLIENTE,"2 ");
+                            sprintf (mensaje_a_cliente,"2 ");
 
-                            write(con,MENSAJE_A_CLIENTE,strlen(MENSAJE_A_CLIENTE));
+                            write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
 	             }
 		     break;
 	      case 2:
@@ -674,35 +658,32 @@ void *usuarios(void *conector)
                      // autentificacion del usuario es correcta
 		     if(resultado==0){
 
-                            /*con no existe en el contesto actual como variable, el argumento no se ha guardado
-                             *en una variable local*/
-                            t.conexion=con; // le paso la "con" a la estructura Tusuario y la guardo en la variable conexion de esa estructura.
-                            strcpy(t.nombre,usuario); // guardo el nombre del usuario en la estructura de Tusuario en la variable nombre.
-                            printf("Se ha aÃƒÂ±adido correctamente el nombre dentro de la estructura Tusuario %d %s\n",t.conexion,t.nombre);
+                            /* le paso la "con" a la estructura Tusuario y la guardo en la variable conexion de esa estructura.*/
+                            t.conexion=con;
+                            
+                            /* guardo el nombre del usuario en la estructura de Tusuario en la variable nombre.*/
+                            strcpy(t.nombre,usuario); 
+                            
+                            printf("Se ha anadido correctamente el nombre dentro de la estructura Tusuario %d %s\n",t.conexion,t.nombre);
                             pon_usuario (&mi_lista,t);
                             escribir_lista (mi_lista);
-                            sprintf (MENSAJE_A_CLIENTE,"3 ");
-
-                           write(con,MENSAJE_A_CLIENTE,strlen(MENSAJE_A_CLIENTE));
+                            sprintf (mensaje_a_cliente,"3 ");
+                            write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
 	             }else{
-	                    printf("El usuario o contraseÃƒÂ±a no son las correctas \n");
-	                    sprintf (MENSAJE_A_CLIENTE,"2 ");
-	                     write(con,MENSAJE_A_CLIENTE,strlen(MENSAJE_A_CLIENTE));
-	                    /*con no existe en el contesto actual como variable, el argumento no se ha guardado
-                             *en una variable local*/
+	                    printf("El usuario o contrasena no son las correctas \n");
+	                    sprintf (mensaje_a_cliente,"2 ");
+	                    write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
 	             }
-	             break;
-	      case 3:
+	             break;     
+              case 3:
                      // Listamos a los jugadores conectados.
                             
-                     construir_lista (mi_lista,MENSAJE_RESPUESTA);
-                            
-                     //----------PROBLEMAAA------// No devuelve el valor de la función, he tenido que enviar directamnte desde la función
-                     // no se carga el valor en el char Mensaje.
-                     printf("Este es el resultado --%s---",MENSAJE_RESPUESTA);
-	             sprintf (MENSAJE_A_CLIENTE,"4 %s ",MENSAJE_RESPUESTA);
-	             write(con,MENSAJE_A_CLIENTE,strlen(MENSAJE_A_CLIENTE));
+                     construir_lista(mi_lista,con);
+                     //printf("aqui ya bloqueo\n")
+                     //printf("Este es el resultado --%s---",mensaje_respuesta);
+	             
               	     break;
+              
 	    /*** DE MOMENTO LO UNICO QUE PODEMOS HACER SIN TENER THREADS EN EL CLIENTE
              *   TODO LO QUE VIENE DEBAJO NO SE PUEDE IMPLEMENTAR SIN CONCURENCIA
              *   AHORA TENIENDO EL VALOR DE CON BIEN PUESTO SACAR LA LISTA ES UNA TONTERIA
@@ -748,32 +729,35 @@ void *usuarios(void *conector)
 	             int p= buscar (usuario, mi_lista);
 	             printf (" %s estÃƒÂ¡ en la posiciÃƒÂ³n %d\n",usuario,p);
 	             eliminar (p, &mi_lista);
-	             construir_lista (mi_lista, msge_lista);
-	             printf ("La lista es: %s\n",msge_lista);
-                     sprintf (mensaje2,"La lista es: %s\n",msge_lista);
-	             [con no existe en el contesto actual como variable, el argumento no se ha guardado
-                     en una variable local]
-                     write(con,mensaje2,strlen(mensaje2));
-		     break;
-	      */
-       } /*fin del switch*/
+	      *       construir_lista (mi_lista, msge_lista);
+	      *       printf ("La lista es: %s\n",msge_lista);
+              *       sprintf (mensaje2,"La lista es: %s\n",msge_lista);
+	      *       [con no existe en el contesto actual como variable, el argumento no se ha guardado
+              *       en una variable local]
+              *       write(con,mensaje2,strlen(mensaje2));
+              *	     break;
+	      **********************************************************************************************/
+       
+       /*fin del switch*/     
+       } 
 
-       //Cuando me envian el 3 para salir
-
-       /*con no existe en el contesto actual como variable, el argumento no se ha guardado
-       *en una variable local*/
-
-       nchar=read(con,buf,MAX);//nchar indica el numero de caractareres recibidos
-       buf[nchar]='\0';
-       printf("Se ha recibido el mensaje %s \n",buf);
-       code=identify(buf);
-       printf("el codigo es: %d\n",code);
-       } /*fin del while*/
+              nchar=read(con,buf,MAX); //nchar indica el numero de caractareres recibidos
+              buf[nchar]='\0';
+              printf("Se ha recibido el mensaje %s \n",buf);
+              code=identify(buf);
+              printf("el codigo es: %d\n",code);
+       
+       /*fin del while*/
+       } 
        
        
-       sprintf (MENSAJE_A_CLIENTE,"100 %s ",usuario);
-       write(con,MENSAJE_A_CLIENTE,strlen(MENSAJE_A_CLIENTE));
-       /*Cerramos el socket, Matamos el Threads y decrementamos el numero de Threads usados*/
+       /* Enviamos mensaje de logoff al Cliente, FALTA ELIMINAR CLIENTE DE LA LISTA DE CONECTADOS
+        * Cerramos el socket, Matamos el Threads y decrementamos el numero de Threads usados*/
+       
+       sprintf (mensaje_a_cliente,"100 %s ",usuario);
+       write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
+       int u = buscar(usuario,mi_lista);
+       eliminar(u,&mi_lista);
        close(con);
        pthread_exit(NULL);
        T--;
@@ -781,66 +765,59 @@ void *usuarios(void *conector)
 
 int main(void) {
 
-    // Defino las variables que utilizarÃƒÂ© en el programa principal
-    int s;
-    int con;
-    int remote_addr_len;
-    T = 0;
-    Tlista MI_LISTA;
-
-
-    struct sockaddr_in serv_adr, remote_addr;
-
-    int thread_p; // Variable donde guardarÃƒÂ© el valor que me retorna thread_create.
-
-    /* Definimos el numero maximo de Threads*/
-    pthread_t Pthread[MAX_THREADS];
-    int cont;
-
-    // Iniciamos nuestra conexiÃƒÂ³n con MYSQL
-    conexion_a_sql();
-
-    //Creamos la base de datos
-    crea_base_datos();
-
-    //iniciamos la conexiÃƒÂ³n y creamos la conexion mediante sockets
-    s = socket_treat(0);
-
-    pthread_mutex_init(&semaforo, NULL); // inicializamos el pthread mutex.
-
-    for(;;){
-
-       /*El while es el responsable por el control de numero maximo de threads*/
-       while (T <= MAX_THREADS){
+       // Defino las variables que se utilizara en el programa principal
+       int s;
+       int con;
+       int remote_addr_len;
+       struct sockaddr_in serv_adr, remote_addr;
+       int thread_p;
+       char mensaje_a_cliente[50];
        
-              printf("dentro del bucle \n");
-              printf ("Esperando connexion\n");
-              remote_addr_len=sizeof(remote_addr);
-              con=accept(s,(struct sockaddr *)&remote_addr, &remote_addr_len);
-              printf ("connexio de %s:%d\n", inet_ntoa(remote_addr.sin_addr), ntohs(remote_addr.sin_port));
-              printf("El valor de con: %d \n",con);
+       T = 0;
+       pthread_t Pthread[MAX_THREADS];
+       inicializa_lista (&mi_lista);
 
-              // Inicializamos la lista//
+       /* Iniciamos nuestra conexionn con MYSQL*/
+       conexion_a_sql();
 
-              inicializa_lista (&MI_LISTA); //&=direccion de memoria donde esta guardada la variable mi_lista
+       /*Creamos la base de datos*/
+       crea_base_datos();
+       
+       /*inicializamos los sockets*/
+       s = socket_treat(0);
 
-              // Le enviamos el primer mensaje al cliente indicandole que se ha conectado correctamente, es el caso numero 0 del cliente//
+       /* inicializamos el pthread mutex.*/
+       pthread_mutex_init(&semaforo, NULL); 
 
-              sprintf (MENSAJE_A_CLIENTE,"0 ");  
+       for(;;){
 
-              write(con,MENSAJE_A_CLIENTE,strlen(MENSAJE_A_CLIENTE));
+              /*El while es el responsable por el control de numero maximo de threads*/
+              while (T <= MAX_THREADS){
+                     printf("dentro del bucle \n");
+                     printf ("Esperando connexion\n");
+                     remote_addr_len=sizeof(remote_addr);
+                     con=accept(s,(struct sockaddr *)&remote_addr, &remote_addr_len);
+                     printf ("connexio de %s:%d\n", inet_ntoa(remote_addr.sin_addr), ntohs(remote_addr.sin_port));
+                     printf("El valor de con: %d \n",con);
 
+                     // Le enviamos el primer mensaje al cliente indicandole que se ha conectado correctamente, es el caso numero 0 del cliente//
+                     sprintf (mensaje_a_cliente,"0 ");  
+                     write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
 
-              /* Iniciamos el thread respetando siempre el numero maximo de Threads permitido*/
-              thread_p=pthread_create(&Pthread[T],NULL,usuarios,(void *) con);
-              if(thread_p){
-	             printf("Ha habido un problema con el thread \n");
-	             exit(-1);
-	      }
-
-              /*Incrementamos el numero de Threads usado*/
-              T++;
-       } //fin del WHILE
-    } // fin del FOR
-pthread_exit(NULL);
-} // Fin del MAIN
+                     /* Iniciamos el thread respetando siempre el numero maximo de Threads permitido*/
+                     thread_p=pthread_create(&Pthread[T],NULL,usuarios,(void *) con);
+                     if(thread_p){
+                           printf("Ha habido un problema con el thread \n");
+                           exit(-1);
+                     }
+                     /*Incrementamos el numero de Threads usado*/
+                     T++;
+                     
+              /*fin del WHILE*/       
+              }
+       /*fin del FOR*/
+       } 
+       pthread_exit(NULL);
+       
+/* Fin del MAIN*/       
+} 
