@@ -20,7 +20,8 @@ namespace WindowsFormsApplication1
         string us;
         string USER;
         int LOGIN = -1;
- 
+        Thread t1;
+
         public Form2(Socket s)
         {
             InitializeComponent();
@@ -34,7 +35,7 @@ namespace WindowsFormsApplication1
             //atender_mensajes_servidor();
             
             ThreadStart ts1 = delegate {atender_mensajes_servidor();};
-            Thread t1 = new Thread(ts1);
+            t1 = new Thread(ts1);
             t1.Start();
         }
         
@@ -114,7 +115,11 @@ namespace WindowsFormsApplication1
                             server.Receive(msg2);
                             string consulta_ganadores = Encoding.ASCII.GetString(msg2);
                             MessageBox.Show(consulta_ganadores);
+                            break;
+                        
+                        case 100:
 
+                            continuar = false;
                             break;
 
                     }
@@ -131,8 +136,7 @@ namespace WindowsFormsApplication1
                 }
             }
             MessageBox.Show("Finaliza atender a servidor");
-            //this.Close();
-            Application.Exit();
+            t1.Abort();
         }
         // Enviamos mensaje para logearnos.
         // Previamente nos tenemos que haber registrado
@@ -164,7 +168,7 @@ namespace WindowsFormsApplication1
                 if (LOGIN == 0)
                 {
                     control = false;
-                    this.Hide();
+                    this.Close();
                 }
             }
         }
