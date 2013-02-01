@@ -51,7 +51,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 5;
-            this.comboBox1.Text = "192.168.56.101";
+            this.comboBox1.Text = "192.168.236.128";
             // 
             // label2
             // 

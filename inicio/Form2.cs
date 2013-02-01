@@ -118,7 +118,8 @@ namespace inicio
                             byte[] msg2 = new byte[80];
                             server.Receive(msg2);
                             string consulta_ganadores = Encoding.ASCII.GetString(msg2);
-                            MessageBox.Show(consulta_ganadores);
+                            consultas.SetLista(consulta_ganadores);
+                            //MessageBox.Show(consulta_ganadores);
                             break;
 
                         case 100:

@@ -15,6 +15,11 @@ namespace inicio
     {
         Socket server;
 
+        public void SetLista(string text)
+        {
+            MessageBox.Show(text);          
+        }
+            
         public Form4(Socket s)
         {
             InitializeComponent();
