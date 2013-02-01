@@ -14,10 +14,43 @@ namespace inicio
     public partial class Form4 : Form
     {
         Socket server;
+        //DataTable Lista = new DataTable();
+        //DataRow Fila;
+
+        delegate void SetListaCallback(string text);
 
         public void SetLista(string text)
         {
-            MessageBox.Show(text);          
+            
+            int i = 0;
+            int j = 0;
+            int index = 0;
+            if (dataGridView1.InvokeRequired)
+            {
+                SetListaCallback d = new SetListaCallback(SetLista);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                //dataGridView1.Rows.Clear();
+                this.dataGridView1.ColumnCount = 1;
+                MessageBox.Show(text);
+                string[] trozos = text.Split(',');
+                List<string> Conectados = new List<string>(trozos);
+                index = Conectados.Count;
+                index--;
+                this.dataGridView1.RowCount = index;
+                Conectados.RemoveAt(index);
+                //MessageBox.Show(text);
+                foreach (string s in Conectados)
+                {
+                    dataGridView1[0, i].Value = s;
+                    dataGridView1.ClearSelection();
+                    i++;
+                    //j++;
+                }
+            }
+
         }
             
         public Form4(Socket s)
@@ -34,7 +67,9 @@ namespace inicio
 
         private void Form4_Load(object sender, EventArgs e)
         {
-
+            //Lista.Columns.Add(new DataColumn("Jugadores Online"));
+            //Fila = Lista.NewRow();
+            //dataGridView1.DataSource = Lista;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -78,6 +113,11 @@ namespace inicio
         {
             UsuarioVsUsuario f = new UsuarioVsUsuario();
             f.Show();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
