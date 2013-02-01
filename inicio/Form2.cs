@@ -114,12 +114,8 @@ namespace inicio
 
                         case 4:
                             // Aqui debería de recibir el listado de conectados
-                            //PRIMEIRO ENVIA MENSAGEM COM A OP E DEPOIS COM A INFO BIZARRO 
-                            byte[] msg2 = new byte[80];
-                            server.Receive(msg2);
-                            string consulta_ganadores = Encoding.ASCII.GetString(msg2);
-                            consultas.SetLista(consulta_ganadores);
-                            //MessageBox.Show(consulta_ganadores);
+                            this.us = trozos[1];
+                            consultas.SetLista(us);
                             break;
 
                         case 100:
