@@ -539,7 +539,7 @@ void construir_lista (Tlista l, int con)
        sprintf (mensaje_a_cliente,"4 %s,",mensaje);
        //printf("El Valor de mensaje_a_cliente: %s  y con: %d \n", mensaje_a_cliente,con);
        write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
-       write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
+       //write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
     /* RETORNAR LA LISTA Y HACER WRITE DESDE EL THREAD QUE TOCA
      * BIZARRO MANDAR DUAS MENSSAGENS, DEUS ME LIVRE! 
      */
