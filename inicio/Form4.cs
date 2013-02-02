@@ -46,12 +46,24 @@ namespace inicio
         
         public void SetJuego(int player)
         {
-            ThreadStart tsjogo = delegate { activar_juego(); };
+            ThreadStart tsjogo = delegate { activar_juego(player); };
 
             /*Creo un nuevo thread a partir de ts2 que es la referencia de chat->FormuralioSecundario*/
             Thread tjogo = new Thread(tsjogo);
             /*Se inicia una nueva instancia del formulario de forma concurrente*/
             tjogo.Start();
+        }
+        
+        public void SetJugada(int player_local,int jugada)
+        {
+            foreach (UsuarioVsUsuario juego in jogos)
+            {
+                if (juego.Text.Equals(this.Text))
+                {
+                    
+                    jogo.SetJugada(player_local,jugada);
+                }
+            }
         }
 
         public void SetLista(string text)
@@ -95,14 +107,14 @@ namespace inicio
             server = s;
         }
 
-        private void activar_juego()
+        private void activar_juego(int jugador)
         {
             /* El form chat se crea y de momento no se thredea, se esta ejecutando en este pequeño
              * espacio de tiempo "bloqueando el código" 
              */
 
             /*Este thread lo único que hace es activar el formulario de Chat*/
-            jogo = new UsuarioVsUsuario();
+            jogo = new UsuarioVsUsuario(server,jugador);
             jogo.Text = this.Text;
 
             /*agrego la nueva instancia del formulario en la instancia de la lista formularios*/
@@ -157,8 +169,8 @@ namespace inicio
 
         private void button5_Click(object sender, EventArgs e)
         {
-            UsuarioVsUsuario f = new UsuarioVsUsuario();
-            f.Show();
+            //UsuarioVsUsuario f = new UsuarioVsUsuario();
+            //f.Show();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

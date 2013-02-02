@@ -46,7 +46,7 @@ namespace inicio
 		
 		void B1Click(object sender, System.EventArgs e)
 		{
-			if(c1.Checked==true){
+			/*if(c1.Checked==true){
 			UsuarioVsUsuario f=new UsuarioVsUsuario();
 			f.Show();}
 			if(c2.Checked==true){
@@ -54,7 +54,7 @@ namespace inicio
 			f.Show();}
 			if(c3.Checked==true){
 			PCVsPC f=new PCVsPC();
-			f.Show();}
+			f.Show();}*/
 			
 		}
 		

@@ -391,7 +391,7 @@ namespace inicio
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(358, 68);
             this.label15.TabIndex = 36;
-            this.label15.Text = "    Gano Azul";
+            this.label15.Text = "    Haz Ganado";
             this.label15.Visible = false;
             this.label15.Click += new System.EventHandler(this.Label15Click);
             // 
@@ -403,7 +403,7 @@ namespace inicio
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(358, 68);
             this.label16.TabIndex = 37;
-            this.label16.Text = "    Gano Rojo";
+            this.label16.Text = "    Haz Perdido";
             this.label16.Visible = false;
             this.label16.Click += new System.EventHandler(this.Label16Click);
             // 

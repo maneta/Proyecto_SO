@@ -64,7 +64,7 @@ namespace inicio
 
             while (continuar)
             {
-                int op;
+                int op,player,casilla;
                 byte[] msg = new byte[180];
                 // recibo mensaje del servidor
 
@@ -127,20 +127,19 @@ namespace inicio
                             break;
                         
                         case 6:
-                            /* Aqui Se va iniciar el form de juego
-                             * Los Argumentos todavia no están definidos, se cambiara bastante 
-                             */
-                            /*ThreadStart ts5 = delegate { activar_formulario_consultas(this.us); };
-                            Thread t5 = new Thread(ts5);
-                            t5.Start();*/
-
-                            int player = Convert.ToInt32(trozos[1]);
+                            player = Convert.ToInt32(trozos[1]);
                             consultas.SetJuego(player);
                             break;
+                        
+                        case 7:
 
-
+                            player = Convert.ToInt32(trozos[1]);
+                            casilla = Convert.ToInt32(trozos[2]);
+                            consultas.SetJugada(player,casilla);
+                            break;
+                        
                         case 100:
-
+        
                             continuar = false;
                             break;
 
