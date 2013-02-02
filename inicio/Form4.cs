@@ -16,6 +16,7 @@ namespace inicio
         Socket server;
         //DataTable Lista = new DataTable();
         //DataRow Fila;
+        string INVITADO;
 
         delegate void SetListaCallback(string text);
 
@@ -117,7 +118,19 @@ namespace inicio
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            
+            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                INVITADO = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            }
+        }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            
+            //string invitado = dataGridView1.SelectedCells.ToString();
+            //string invitado = dataGridView1.CurrentCell.Value;
+            MessageBox.Show(INVITADO);
         }
     }
 }
