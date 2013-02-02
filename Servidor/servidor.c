@@ -757,14 +757,15 @@ void *usuarios(void *conector)
                             strcpy(invitante,PLAYERLIST.jugadores[0].nombre); 
                             int index = buscar(invitante,mi_lista);
                             int socket_invitante = mi_lista.usuarios[index].conexion;
-                            sprintf (mensaje_a_cliente,"6 ");
+                            sprintf (mensaje_a_cliente,"6 1");
                             write(socket_invitante,mensaje_a_cliente,strlen(mensaje_a_cliente));
                             
                             /*Aqui se abre el tablero en el formulario del invitado*/
-                            strcpy(invitado,PLAYERLIST.jugadores[1].nombre); 
+                            strcpy(invitado,PLAYERLIST.jugadores[1].nombre);
+                            printf("el nombre del invitadoes: %s \n",invitado);
                             index = buscar(invitado,mi_lista);
-                            socket_invitado = mi_lista.usuarios[index].conexion;
-                            sprintf (mensaje_a_cliente,"6 ");
+                            int socket_invitado = mi_lista.usuarios[index].conexion;
+                            sprintf (mensaje_a_cliente,"6 0");
                             write(socket_invitado,mensaje_a_cliente,strlen(mensaje_a_cliente));
                             
                      }else if(aceptacion == 0){
