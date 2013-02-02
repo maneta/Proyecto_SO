@@ -633,7 +633,7 @@ void *usuarios(void *conector)
 {
 
        printf("dentro de Usuarios \n");
-       int code,borrador,aceptacion;
+       int code,borrador,aceptacion,jugador,jugada;
        int nchar;
        static char buf[MAX];
        //char mensaje2[MAX];
@@ -753,14 +753,20 @@ void *usuarios(void *conector)
                      if(aceptacion == 1){
                             /*Se escribirá un case de tipo 6 activando el form de juego*/
                             
-                            /*Aqui se abre el tablero en el formulario del invitante*/
+                            /*Aqui se abre el tablero en el formulario del invitante
+                            * El invitante siempre será el PLAYERLIST.jugadores[0],
+                            * Esto porque es el primero que se crea en la struct.
+                            */
                             strcpy(invitante,PLAYERLIST.jugadores[0].nombre); 
                             int index = buscar(invitante,mi_lista);
                             int socket_invitante = mi_lista.usuarios[index].conexion;
                             sprintf (mensaje_a_cliente,"6 1");
                             write(socket_invitante,mensaje_a_cliente,strlen(mensaje_a_cliente));
                             
-                            /*Aqui se abre el tablero en el formulario del invitado*/
+                            /*Aqui se abre el tablero en el formulario del invitado
+                            * El invitante siempre será el PLAYERLIST.jugadores[1],
+                            * Esto porque es el segundo que se crea en la struct.
+                            */
                             strcpy(invitado,PLAYERLIST.jugadores[1].nombre);
                             printf("el nombre del invitadoes: %s \n",invitado);
                             index = buscar(invitado,mi_lista);
@@ -771,8 +777,41 @@ void *usuarios(void *conector)
                      }else if(aceptacion == 0){
                          inicializa_players(&PLAYERLIST);   
                      }
-                     
                      break;
+              case 6:
+                     /*Este case será el responsable de recibir las jugadas y repasarlas
+                     * el mensaje será del tipo 6 [0/1] [1..9]
+                     * En caso de que el primero argumento sea 0 -> mensaje hacia invitante
+                     * En caso de que el primero argumento sea 1 -> mensaje hacia invitado
+                     * [1..9] -> Casilla de uno a 9 (B1=1,B2=2,B3=3...etc)
+                     */
+                     //int jugador,jugada;
+                     
+                     sscanf (buf,"%d %d %d", &borrador, &jugador,&jugada);
+                     if(jugador == 0){
+                            /*Caso de mensaje destinado a invitante
+                            * Se enviará un mensaje al cliente del tipo 7 1 [1..9]
+                            * En el cliente se pasa la x = true;
+                            */
+                            strcpy(invitante,PLAYERLIST.jugadores[0].nombre); 
+                            int index = buscar(invitante,mi_lista);
+                            int socket_invitante = mi_lista.usuarios[index].conexion;
+                            sprintf (mensaje_a_cliente,"7 1 %d",jugada);
+                            write(socket_invitante,mensaje_a_cliente,strlen(mensaje_a_cliente));
+                     }
+                     if(jugador == 1){
+                            
+                            /*Caso de mensaje destinado a invitado
+                            * Se enviará un mensaje al cliente del tipo 7 1 [1..9]
+                            * En el cliente se pasa la x = true;
+                            */
+                            strcpy(invitado,PLAYERLIST.jugadores[1].nombre);
+                            index = buscar(invitado,mi_lista);
+                            int socket_invitado = mi_lista.usuarios[index].conexion;
+                            sprintf (mensaje_a_cliente,"7 0 %d",jugada);
+                            write(socket_invitado,mensaje_a_cliente,strlen(mensaje_a_cliente));
+                     }
+                     
               
 	    /*** DE MOMENTO LO UNICO QUE PODEMOS HACER SIN TENER THREADS EN EL CLIENTE
              *   TODO LO QUE VIENE DEBAJO NO SE PUEDE IMPLEMENTAR SIN CONCURENCIA
