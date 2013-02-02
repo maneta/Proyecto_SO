@@ -527,7 +527,7 @@ namespace inicio
 			
 			if(B1=="x"&&B2=="x"&&B3=="x")
 			{
-                if (label2.InvokeRequired)
+                if (label3.InvokeRequired)
                 {
                     SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
                     this.Invoke(d, new object[] {});
@@ -565,10 +565,41 @@ namespace inicio
             }
 			if(B4=="x"&&B5=="x"&&B6=="x")
 			{
-                this.label4.Visible = true;
-                this.label16.Visible = true;
-                x=false;
-                o=false;
+                if (label4.InvokeRequired)
+                {
+                    SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                    this.Invoke(d, new object[] { });
+                }
+                else
+                {
+                    this.label4.Visible = true;
+
+                    x = false;
+                    o = false;
+
+                    /*Este If activa Los paneles de ganadores y perdedores
+                     * Actualiza el servidor con a la información de ganador
+                     * Todavia hace falta configurar los mensajes que se envian al servidor
+                     * Esta configuración es la del que gana el jugador de la X
+                     * Para O tenemos que invertir la logica.
+                     */
+                }
+                if (PLAYER == 1)
+                {
+                    this.label15.Visible = true;
+                }
+                if (PLAYER == 0)
+                {
+                    if (label16.InvokeRequired)
+                    {
+                        SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                        this.Invoke(d, new object[] { });
+                    }
+                    else
+                    {
+                        this.label16.Visible = true;
+                    }
+                }
             }
 			if(B7=="x"&&B8=="x"&&B9=="x")
 			{this.label5.Visible = true;this.label16.Visible = true;x=false;o=false;}
