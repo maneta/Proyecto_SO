@@ -17,6 +17,8 @@ namespace inicio
         Socket server;
         //Form3 users;
         Form4 consultas;
+        UsuarioVsUsuario jogo;
+        
         string us;
         string USER;
         int LOGIN = -1;
@@ -127,9 +129,13 @@ namespace inicio
                         case 6:
                             /* Aqui Se va iniciar el form de juego
                              * Los Argumentos todavia no están definidos, se cambiara bastante 
-                             */ 
-                            //this.us = trozos[1];
-                            consultas.SetJuego();
+                             */
+                            /*ThreadStart ts5 = delegate { activar_formulario_consultas(this.us); };
+                            Thread t5 = new Thread(ts5);
+                            t5.Start();*/
+
+                            int player = Convert.ToInt32(trozos[1]);
+                            consultas.SetJuego(player);
                             break;
 
 

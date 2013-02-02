@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace inicio
 {
@@ -17,6 +18,8 @@ namespace inicio
         //DataTable Lista = new DataTable();
         //DataRow Fila;
         string INVITADO;
+        UsuarioVsUsuario jogo;
+        List<UsuarioVsUsuario> jogos = new List<UsuarioVsUsuario>();
 
         delegate void SetListaCallback(string text);
 
@@ -41,10 +44,14 @@ namespace inicio
 
         }
         
-        public void SetJuego()
+        public void SetJuego(int player)
         {
-            UsuarioVsUsuario f = new UsuarioVsUsuario();
-            f.Show();
+            ThreadStart tsjogo = delegate { activar_juego(); };
+
+            /*Creo un nuevo thread a partir de ts2 que es la referencia de chat->FormuralioSecundario*/
+            Thread tjogo = new Thread(tsjogo);
+            /*Se inicia una nueva instancia del formulario de forma concurrente*/
+            tjogo.Start();
         }
 
         public void SetLista(string text)
@@ -88,6 +95,23 @@ namespace inicio
             server = s;
         }
 
+        private void activar_juego()
+        {
+            /* El form chat se crea y de momento no se thredea, se esta ejecutando en este pequeño
+             * espacio de tiempo "bloqueando el código" 
+             */
+
+            /*Este thread lo único que hace es activar el formulario de Chat*/
+            jogo = new UsuarioVsUsuario();
+            jogo.Text = this.Text;
+
+            /*agrego la nueva instancia del formulario en la instancia de la lista formularios*/
+            jogos.Add(jogo);
+
+            /*enseño por pantalla la nueva instancia del formulario*/
+            jogo.ShowDialog();
+            
+        }
         private void button2_Click(object sender, EventArgs e)
         {
 
