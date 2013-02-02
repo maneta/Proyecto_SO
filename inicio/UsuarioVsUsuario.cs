@@ -757,7 +757,34 @@ namespace inicio
                 }
             }
 			if(B1=="x"&&B5=="x"&&B9=="x")
-			{this.label16.Visible = true;d2941();x=false;o=false;}
+			{
+                x = false;
+                o = false;
+
+                /*Este If activa Los paneles de ganadores y perdedores
+                 * Actualiza el servidor con a la información de ganador
+                 * Todavia hace falta configurar los mensajes que se envian al servidor
+                 * Esta configuración es la del que gana el jugador de la X
+                 * Para O tenemos que invertir la logica.
+                 */
+                d2941();
+                if (PLAYER == 1)
+                {
+                    this.label15.Visible = true;
+                }
+                if (PLAYER == 0)
+                {
+                    if (label16.InvokeRequired)
+                    {
+                        SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                        this.Invoke(d, new object[] { });
+                    }
+                    else
+                    {
+                        this.label16.Visible = true;
+                    }
+                }
+            }
 			if(B3=="x"&&B5=="x"&&B7=="x")
 			{
                     x = false;
@@ -786,7 +813,6 @@ namespace inicio
                         this.label16.Visible = true;
                     }
                 }
-                //this.label16.Visible = true;d1727();x=false;o=false;
             }
 			if(B1=="o"&&B2=="o"&&B3=="o")
 			{
@@ -1152,17 +1178,129 @@ namespace inicio
 		
 		}
 		public void d2941()
-		{this.label29.Visible = true;this.label39.Visible = true;
-		this.label30.Visible = true;this.label40.Visible = true;
-		this.label31.Visible = true;this.label32.Visible = true;
-		this.label33.Visible = true;this.label34.Visible = true;
-		this.label35.Visible = true;this.label36.Visible = true;
-		this.label37.Visible = true;this.label38.Visible = true;
-		this.label41.Visible = true;
-		
+		{
+            if (label29.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label29.Visible = true;
+            }
+            if (label39.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label39.Visible = true;
+            }
+            if (label30.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label30.Visible = true;
+            }
+            if (label40.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label40.Visible = true;
+            }
+            if (label31.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label31.Visible = true;
+            }
+            if (label32.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label32.Visible = true;
+            }
+            if (label33.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label33.Visible = true;
+            }
+            if (label34.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label34.Visible = true;
+            }
+            if (label35.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label35.Visible = true;
+            }
+            if (label36.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label36.Visible = true;
+            }
+            if (label37.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label37.Visible = true;
+            }
+            if (label38.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label38.Visible = true;
+            }
+            if (label41.InvokeRequired)
+            {
+                SetAnalizaCallBack d = new SetAnalizaCallBack(d2941);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                this.label41.Visible = true;
+            }
 		}
 		public void d4253()
-		{this.label42.Visible = true;this.label48.Visible = true;
+		{
+            this.label42.Visible = true;
+            this.label48.Visible = true;
 		this.label43.Visible = true;this.label49.Visible = true;
 		this.label44.Visible = true;this.label50.Visible = true;
 		this.label45.Visible = true;this.label51.Visible = true;
