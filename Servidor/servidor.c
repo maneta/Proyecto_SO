@@ -37,6 +37,21 @@ typedef struct {
        int num;
        Tusuario usuarios [MAX];
  } Tlista;
+ 
+ /*......Estructuras responsables por la invitación y jugadas......*/
+ typedef struct {
+       char nombre [20];
+ } Tjugador;
+
+ typedef struct {
+       /*Los valores de num solamente serán 0-->X, o 1-->O
+       * Los invitadores serán siempre num=0-->X y los invitados num=1-->O
+       */
+       int num;
+       Tjugador jugadores [MAX];
+ } TlistaJugadores;
+ 
+/*......Fin de las estructuras de las Jugadas......*/ 
 
 /*.........Fin de las estructuras........*/
 
@@ -44,6 +59,11 @@ typedef struct {
 
 Tlista mi_lista;
 Tusuario t;
+
+/*Asignacion Global de las Estructuras de jugada*/
+
+Tjugador PLAYER;
+TlistaJugadores PLAYERLIST;
 
 /*........Defino variables globales.....*/
 
@@ -486,6 +506,11 @@ void inicializa_lista (Tlista *l)
        l->num=0;
 }
 
+void inicializa_players (TlistaJugadores *l)
+{  
+       /*Pone a 0 el numero de usuarios de la lista*/
+       l->num=0;
+}
 
 
 int pon_usuario (Tlista *l, Tusuario u)
@@ -498,6 +523,21 @@ int pon_usuario (Tlista *l, Tusuario u)
        else
        {
   	      l->usuarios[l->num]=u;
+  	      l->num=l->num+1;
+  	      return 0;
+       }
+}
+
+int pon_player (TlistaJugadores *l, Tjugador u)
+ {
+/* Anade el usuario u al final de la lista.
+ * Devuelve 0 si todo bien y -1 si no hay espacio en la lista
+ */
+       if (l->num==MAX)
+  	      return -1;
+       else
+       {
+  	      l->jugadores[l->num]=u;
   	      l->num=l->num+1;
   	      return 0;
        }
@@ -593,12 +633,14 @@ void *usuarios(void *conector)
 {
 
        printf("dentro de Usuarios \n");
-       int code;
+       int code,borrador,aceptacion;
        int nchar;
        static char buf[MAX];
        //char mensaje2[MAX];
        int resultado;
        char usuario [80];
+       char invitante [80];
+       char invitado [80];
        char mensaje_a_cliente[50];
        //char *mensaje_respuesta;
        
@@ -683,6 +725,53 @@ void *usuarios(void *conector)
                      //printf("Este es el resultado --%s---",mensaje_respuesta);
 	             
               	     break;
+              case 4:
+                     /*Case responsable por recibir la peticion de invitacion
+                     * La invitacion se envia con un mensaje de tipo 5
+                     */
+                     sscanf (buf,"%d %s %s", &borrador, invitante, invitado);
+                     
+                     /*Se pone los dos jugadores en la lista de Juego
+                     * En Caso de que no acepta la invitacion se limpia la lista.
+                     */
+                     strcpy(PLAYER.nombre,invitante); 
+                     pon_player (&PLAYERLIST,PLAYER);
+                     strcpy(PLAYER.nombre,invitado); 
+                     pon_player (&PLAYERLIST,PLAYER);   
+                     
+                     int index = buscar(invitado,mi_lista);
+                     int socket_invitado = mi_lista.usuarios[index].conexion;
+                     sprintf (mensaje_a_cliente,"5 %s",invitante);
+                     write(socket_invitado,mensaje_a_cliente,strlen(mensaje_a_cliente));
+                     break;
+              
+              case 5:
+                     /*Case responsable por la decision de aceptacion de la partida*/
+                     
+                     
+                     sscanf (buf,"%d %d", &borrador, &aceptacion);
+                     if(aceptacion == 1){
+                            /*Se escribirá un case de tipo 6 activando el form de juego*/
+                            
+                            /*Aqui se abre el tablero en el formulario del invitante*/
+                            strcpy(invitante,PLAYERLIST.jugadores[0].nombre); 
+                            int index = buscar(invitante,mi_lista);
+                            int socket_invitante = mi_lista.usuarios[index].conexion;
+                            sprintf (mensaje_a_cliente,"6 ");
+                            write(socket_invitante,mensaje_a_cliente,strlen(mensaje_a_cliente));
+                            
+                            /*Aqui se abre el tablero en el formulario del invitado*/
+                            strcpy(invitado,PLAYERLIST.jugadores[1].nombre); 
+                            index = buscar(invitado,mi_lista);
+                            socket_invitado = mi_lista.usuarios[index].conexion;
+                            sprintf (mensaje_a_cliente,"6 ");
+                            write(socket_invitado,mensaje_a_cliente,strlen(mensaje_a_cliente));
+                            
+                     }else if(aceptacion == 0){
+                         inicializa_players(&PLAYERLIST);   
+                     }
+                     
+                     break;
               
 	    /*** DE MOMENTO LO UNICO QUE PODEMOS HACER SIN TENER THREADS EN EL CLIENTE
              *   TODO LO QUE VIENE DEBAJO NO SE PUEDE IMPLEMENTAR SIN CONCURENCIA
@@ -776,7 +865,8 @@ int main(void) {
        T = 0;
        pthread_t Pthread[MAX_THREADS];
        inicializa_lista (&mi_lista);
-
+       inicializa_players (&PLAYERLIST);
+       
        /* Iniciamos nuestra conexionn con MYSQL*/
        conexion_a_sql();
 
