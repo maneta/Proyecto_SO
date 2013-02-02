@@ -73,12 +73,6 @@
     <Compile Include="Form4.Designer.cs">
       <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -89,9 +83,6 @@
     <EmbeddedResource Include="Form4.resx">
       <DependentUpon>Form4.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
     <Compile Include="UsuarioVsUsuario.Designer.cs">
       <DependentUpon>UsuarioVsUsuario.cs</DependentUpon>
     </Compile>
@@ -100,24 +91,6 @@
     </Compile>
     <EmbeddedResource Include="UsuarioVsUsuario.resx">
       <DependentUpon>UsuarioVsUsuario.cs</DependentUpon>
-    </EmbeddedResource>
-    <Compile Include="UsuarioVsPC.Designer.cs">
-      <DependentUpon>UsuarioVsPC.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UsuarioVsPC.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <EmbeddedResource Include="UsuarioVsPC.resx">
-      <DependentUpon>UsuarioVsPC.cs</DependentUpon>
-    </EmbeddedResource>
-    <Compile Include="PCVsPC.Designer.cs">
-      <DependentUpon>PCVsPC.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PCVsPC.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <EmbeddedResource Include="PCVsPC.resx">
-      <DependentUpon>PCVsPC.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,12 +1,3 @@
-/*
- * Created by SharpDevelop.
- * User: Usuario
- * Date: 23/09/2008
- * Time: 09:39 p.m.
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -16,9 +7,6 @@ using System.Threading;
 
 namespace inicio
 {
-	/// <summary>
-	/// Description of UsuarioVsUsuario.
-	/// </summary>
 	public partial class UsuarioVsUsuario
 	{
         Socket server;
@@ -27,16 +15,10 @@ namespace inicio
 
         public UsuarioVsUsuario(Socket s,int player)
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
             server = s;
             PLAYER = player;
             
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 		}
 
         public void SetJugada(int player, int casilla)
@@ -837,18 +819,18 @@ namespace inicio
                 }
                 if (PLAYER == 0)
                 {
-                    this.label16.Visible = true;
+                    this.label15.Visible = true;
                 }
                 if (PLAYER == 1)
                 {
-                    if (label15.InvokeRequired)
+                    if (label16.InvokeRequired)
                     {
                         SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
                         this.Invoke(d, new object[] { });
                     }
                     else
                     {
-                        this.label15.Visible = true;
+                        this.label16.Visible = true;
                     }
                 }
             }
@@ -875,18 +857,18 @@ namespace inicio
                 }
                 if (PLAYER == 0)
                 {
-                    this.label16.Visible = true;
+                    this.label15.Visible = true;
                 }
                 if (PLAYER == 1)
                 {
-                    if (label15.InvokeRequired)
+                    if (label16.InvokeRequired)
                     {
                         SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
                         this.Invoke(d, new object[] { });
                     }
                     else
                     {
-                        this.label15.Visible = true;
+                        this.label16.Visible = true;
                     }
                 }
             }
@@ -913,18 +895,18 @@ namespace inicio
                 }
                 if (PLAYER == 0)
                 {
-                    this.label16.Visible = true;
+                    this.label15.Visible = true;
                 }
                 if (PLAYER == 1)
                 {
-                    if (label15.InvokeRequired)
+                    if (label16.InvokeRequired)
                     {
                         SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
                         this.Invoke(d, new object[] { });
                     }
                     else
                     {
-                        this.label15.Visible = true;
+                        this.label16.Visible = true;
                     }
                 }
             }
@@ -937,7 +919,7 @@ namespace inicio
                 }
                 else
                 {
-                    this.label2.Visible = true;
+                    this.label12.Visible = true;
 
                     x = false;
                     o = false;
@@ -951,18 +933,18 @@ namespace inicio
                 }
                 if (PLAYER == 0)
                 {
-                    this.label16.Visible = true;
+                    this.label15.Visible = true;
                 }
                 if (PLAYER == 1)
                 {
-                    if (label15.InvokeRequired)
+                    if (label16.InvokeRequired)
                     {
                         SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
                         this.Invoke(d, new object[] { });
                     }
                     else
                     {
-                        this.label15.Visible = true;
+                        this.label16.Visible = true;
                     }
                 }
             }
@@ -975,7 +957,7 @@ namespace inicio
                 }
                 else
                 {
-                    this.label3.Visible = true;
+                    this.label13.Visible = true;
 
                     x = false;
                     o = false;
@@ -989,18 +971,18 @@ namespace inicio
                 }
                 if (PLAYER == 0)
                 {
-                    this.label16.Visible = true;
+                    this.label15.Visible = true;
                 }
                 if (PLAYER == 1)
                 {
-                    if (label15.InvokeRequired)
+                    if (label16.InvokeRequired)
                     {
                         SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
                         this.Invoke(d, new object[] { });
                     }
                     else
                     {
-                        this.label15.Visible = true;
+                        this.label16.Visible = true;
                     }
                 }
             }
@@ -1013,7 +995,7 @@ namespace inicio
                 }
                 else
                 {
-                    this.label4.Visible = true;
+                    this.label14.Visible = true;
 
                     x = false;
                     o = false;
@@ -1027,18 +1009,18 @@ namespace inicio
                 }
                 if (PLAYER == 0)
                 {
-                    this.label16.Visible = true;
+                    this.label15.Visible = true;
                 }
                 if (PLAYER == 1)
                 {
-                    if (label15.InvokeRequired)
+                    if (label16.InvokeRequired)
                     {
                         SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
                         this.Invoke(d, new object[] { });
                     }
                     else
                     {
-                        this.label15.Visible = true;
+                        this.label16.Visible = true;
                     }
                 }
             }
@@ -1627,5 +1609,6 @@ namespace inicio
         {
             start();   
         }
+
 	}
 }

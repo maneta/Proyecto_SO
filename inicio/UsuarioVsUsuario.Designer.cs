@@ -734,7 +734,7 @@ namespace inicio
             // label53
             // 
             this.label53.BackColor = System.Drawing.Color.Blue;
-            this.label53.Location = new System.Drawing.Point(44, 313);
+            this.label53.Location = new System.Drawing.Point(44, 309);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(28, 29);
             this.label53.TabIndex = 74;
