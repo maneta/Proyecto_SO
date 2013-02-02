@@ -762,27 +762,253 @@ namespace inicio
 			if(B3=="x"&&B5=="x"&&B7=="x")
 			{this.label16.Visible = true;d1727();x=false;o=false;}
 			if(B1=="o"&&B2=="o"&&B3=="o")
-			{this.label9.Visible = true;this.label15.Visible = true;x=false;o=false;}
+			{
+                if (label9.InvokeRequired)
+                {
+                    SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                    this.Invoke(d, new object[] { });
+                }
+                else
+                {
+                    this.label9.Visible = true;
+
+                    x = false;
+                    o = false;
+
+                    /*Este If activa Los paneles de ganadores y perdedores
+                     * Actualiza el servidor con a la información de ganador
+                     * Todavia hace falta configurar los mensajes que se envian al servidor
+                     * Esta configuración es la del que gana el jugador de la X
+                     * Para O tenemos que invertir la logica.
+                     */
+                }
+                if (PLAYER == 0)
+                {
+                    this.label16.Visible = true;
+                }
+                if (PLAYER == 1)
+                {
+                    if (label15.InvokeRequired)
+                    {
+                        SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                        this.Invoke(d, new object[] { });
+                    }
+                    else
+                    {
+                        this.label15.Visible = true;
+                    }
+                }
+            }
 			if(B4=="o"&&B5=="o"&&B6=="o")
-			{this.label10.Visible = true;this.label15.Visible = true;x=false;o=false;}
+			{
+                if (label10.InvokeRequired)
+                {
+                    SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                    this.Invoke(d, new object[] { });
+                }
+                else
+                {
+                    this.label10.Visible = true;
+
+                    x = false;
+                    o = false;
+
+                    /*Este If activa Los paneles de ganadores y perdedores
+                     * Actualiza el servidor con a la información de ganador
+                     * Todavia hace falta configurar los mensajes que se envian al servidor
+                     * Esta configuración es la del que gana el jugador de la X
+                     * Para O tenemos que invertir la logica.
+                     */
+                }
+                if (PLAYER == 0)
+                {
+                    this.label16.Visible = true;
+                }
+                if (PLAYER == 1)
+                {
+                    if (label15.InvokeRequired)
+                    {
+                        SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                        this.Invoke(d, new object[] { });
+                    }
+                    else
+                    {
+                        this.label15.Visible = true;
+                    }
+                }
+            }
 			if(B7=="o"&&B8=="o"&&B9=="o")
-			{this.label11.Visible = true;this.label15.Visible = true;x=false;o=false;}
+			{
+                if (label11.InvokeRequired)
+                {
+                    SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                    this.Invoke(d, new object[] { });
+                }
+                else
+                {
+                    this.label11.Visible = true;
+
+                    x = false;
+                    o = false;
+
+                    /*Este If activa Los paneles de ganadores y perdedores
+                     * Actualiza el servidor con a la información de ganador
+                     * Todavia hace falta configurar los mensajes que se envian al servidor
+                     * Esta configuración es la del que gana el jugador de la X
+                     * Para O tenemos que invertir la logica.
+                     */
+                }
+                if (PLAYER == 0)
+                {
+                    this.label16.Visible = true;
+                }
+                if (PLAYER == 1)
+                {
+                    if (label15.InvokeRequired)
+                    {
+                        SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                        this.Invoke(d, new object[] { });
+                    }
+                    else
+                    {
+                        this.label15.Visible = true;
+                    }
+                }
+            }
 			if(B1=="o"&&B4=="o"&&B7=="o")
-			{this.label12.Visible = true;this.label15.Visible = true;x=false;o=false;}
+			{
+                if (label12.InvokeRequired)
+                {
+                    SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                    this.Invoke(d, new object[] { });
+                }
+                else
+                {
+                    this.label2.Visible = true;
+
+                    x = false;
+                    o = false;
+
+                    /*Este If activa Los paneles de ganadores y perdedores
+                     * Actualiza el servidor con a la información de ganador
+                     * Todavia hace falta configurar los mensajes que se envian al servidor
+                     * Esta configuración es la del que gana el jugador de la X
+                     * Para O tenemos que invertir la logica.
+                     */
+                }
+                if (PLAYER == 0)
+                {
+                    this.label16.Visible = true;
+                }
+                if (PLAYER == 1)
+                {
+                    if (label15.InvokeRequired)
+                    {
+                        SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                        this.Invoke(d, new object[] { });
+                    }
+                    else
+                    {
+                        this.label15.Visible = true;
+                    }
+                }
+            }
 			if(B2=="o"&&B5=="o"&&B8=="o")
-			{this.label13.Visible = true;this.label15.Visible = true;x=false;o=false;}
+			{
+                if (label13.InvokeRequired)
+                {
+                    SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                    this.Invoke(d, new object[] { });
+                }
+                else
+                {
+                    this.label3.Visible = true;
+
+                    x = false;
+                    o = false;
+
+                    /*Este If activa Los paneles de ganadores y perdedores
+                     * Actualiza el servidor con a la información de ganador
+                     * Todavia hace falta configurar los mensajes que se envian al servidor
+                     * Esta configuración es la del que gana el jugador de la X
+                     * Para O tenemos que invertir la logica.
+                     */
+                }
+                if (PLAYER == 0)
+                {
+                    this.label16.Visible = true;
+                }
+                if (PLAYER == 1)
+                {
+                    if (label15.InvokeRequired)
+                    {
+                        SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                        this.Invoke(d, new object[] { });
+                    }
+                    else
+                    {
+                        this.label15.Visible = true;
+                    }
+                }
+            }
 			if(B3=="o"&&B6=="o"&&B9=="o")
-			{this.label14.Visible = true;this.label15.Visible = true;x=false;o=false;}
+			{
+                if (label14.InvokeRequired)
+                {
+                    SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                    this.Invoke(d, new object[] { });
+                }
+                else
+                {
+                    this.label4.Visible = true;
+
+                    x = false;
+                    o = false;
+
+                    /*Este If activa Los paneles de ganadores y perdedores
+                     * Actualiza el servidor con a la información de ganador
+                     * Todavia hace falta configurar los mensajes que se envian al servidor
+                     * Esta configuración es la del que gana el jugador de la X
+                     * Para O tenemos que invertir la logica.
+                     */
+                }
+                if (PLAYER == 0)
+                {
+                    this.label16.Visible = true;
+                }
+                if (PLAYER == 1)
+                {
+                    if (label15.InvokeRequired)
+                    {
+                        SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                        this.Invoke(d, new object[] { });
+                    }
+                    else
+                    {
+                        this.label15.Visible = true;
+                    }
+                }
+            }
 			if(B1=="o"&&B5=="o"&&B9=="o")
 			{this.label15.Visible = true;d5466()	;x=false;o=false;}
 			if(B3=="o"&&B5=="o"&&B7=="o")
 			{this.label15.Visible = true;d4253();x=false;o=false;}
 			if(c==9)
 			{
-				if(label16.Visible==false&&label15.Visible==false)
-					this.label68.Visible = true;
+                if (label16.Visible == false && label15.Visible == false)
+                {
+                    if (label68.InvokeRequired)
+                    {
+                        SetAnalizaCallBack d = new SetAnalizaCallBack(analiza);
+                        this.Invoke(d, new object[] { });
+                    }
+                    else
+                    {
+                        this.label68.Visible = true;
+                    }
+                    
+                }
 			}
-			
 		}
 		
 		public void d1727()
