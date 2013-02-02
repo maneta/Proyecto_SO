@@ -113,9 +113,16 @@ namespace inicio
                             break;
 
                         case 4:
-                            // Aqui debería de recibir el listado de conectados
+                            // Aqui Se recibe la lista de conectados
                             this.us = trozos[1];
                             consultas.SetLista(us);
+                            break;
+
+                        case 5:
+                            // Aqui Se recibe la invitación 
+                            this.us = trozos[1];
+                            consultas.SetInvitacion(us);
+                            //MessageBox.Show(us);
                             break;
 
                         case 100:

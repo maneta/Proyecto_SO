@@ -20,6 +20,22 @@ namespace inicio
 
         delegate void SetListaCallback(string text);
 
+        public void SetInvitacion(string text)
+        {
+            string invitacion = "Invitacio de " + text;
+            string header = "Aceptas Jugar " + this.Text + "?";
+            DialogResult res= MessageBox.Show(invitacion, header, MessageBoxButtons.YesNo);
+
+        if (res == DialogResult.Yes)
+        {
+            // user clicked yes
+        }
+        else
+        {
+        // user clicked no
+        }
+        }
+
         public void SetLista(string text)
         {
             
@@ -90,16 +106,10 @@ namespace inicio
         {
             StringBuilder constructor = new StringBuilder();
             constructor.Append("3 ");
-            //constructor.Append(usuario2.Text);
-
             string verify = constructor.ToString();
             byte[] msg = System.Text.Encoding.ASCII.GetBytes(verify);
             server.Send(msg);
 
-            /*  byte[] msg2 = new byte[80];
-              server.Receive(msg2);
-              string mensaje = Encoding.ASCII.GetString(msg2);
-              MessageBox.Show(mensaje); */
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -127,10 +137,12 @@ namespace inicio
 
         private void button6_Click(object sender, EventArgs e)
         {
-            
-            //string invitado = dataGridView1.SelectedCells.ToString();
-            //string invitado = dataGridView1.CurrentCell.Value;
-            MessageBox.Show(INVITADO);
+            /*Boton Responsable por enviar la peticion (4) de invitacion*/
+            String invitacion = "4 " + this.Text + " " + INVITADO;
+            MessageBox.Show(invitacion);
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(invitacion);
+            server.Send(msg);
+
         }
     }
 }
