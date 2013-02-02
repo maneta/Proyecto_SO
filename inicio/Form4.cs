@@ -28,12 +28,23 @@ namespace inicio
 
         if (res == DialogResult.Yes)
         {
-            // user clicked yes
+            String resultado = "5 1" + this.Text;
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+            server.Send(msg);
         }
         else
         {
-        // user clicked no
+            String resultado = "5 0" + this.Text;
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+            server.Send(msg);
         }
+
+        }
+        
+        public void SetJuego()
+        {
+            UsuarioVsUsuario f = new UsuarioVsUsuario();
+            f.Show();
         }
 
         public void SetLista(string text)

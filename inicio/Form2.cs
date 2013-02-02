@@ -122,8 +122,16 @@ namespace inicio
                             // Aqui Se recibe la invitación 
                             this.us = trozos[1];
                             consultas.SetInvitacion(us);
-                            //MessageBox.Show(us);
                             break;
+                        
+                        case 6:
+                            /* Aqui Se va iniciar el form de juego
+                             * Los Argumentos todavia no están definidos, se cambiara bastante 
+                             */ 
+                            //this.us = trozos[1];
+                            consultas.SetJuego();
+                            break;
+
 
                         case 100:
 
