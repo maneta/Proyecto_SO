@@ -251,7 +251,6 @@ namespace inicio
                 
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 1";
-                MessageBox.Show(jugada);
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -264,7 +263,6 @@ namespace inicio
 
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 1";
-                MessageBox.Show(jugada);
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 
@@ -282,7 +280,7 @@ namespace inicio
 				this.p2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p10.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 2";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -294,7 +292,7 @@ namespace inicio
 				this.p2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p11.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 2";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -311,7 +309,7 @@ namespace inicio
 				this.p3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p10.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 3";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -323,7 +321,7 @@ namespace inicio
 				this.p3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p11.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 3";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -340,7 +338,7 @@ namespace inicio
 				this.p4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p10.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 4";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -352,7 +350,7 @@ namespace inicio
 				this.p4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p11.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 4";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -369,7 +367,7 @@ namespace inicio
 				this.p5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p10.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 5";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -381,7 +379,7 @@ namespace inicio
 				this.p5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p11.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 5";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -398,7 +396,7 @@ namespace inicio
 				this.p6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p10.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 6";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -410,7 +408,7 @@ namespace inicio
 				this.p6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p11.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 6";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -427,7 +425,7 @@ namespace inicio
 				this.p7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p10.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 7";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -439,7 +437,7 @@ namespace inicio
 				this.p7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p11.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 7";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -456,7 +454,7 @@ namespace inicio
 				this.p8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p10.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 8";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -468,7 +466,7 @@ namespace inicio
 				this.p8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p11.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 8";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -485,7 +483,7 @@ namespace inicio
 				this.p9.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p10.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 9";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -497,7 +495,7 @@ namespace inicio
 				this.p9.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("p11.BackgroundImage")));
                 //Escribir mensaje en el socketActualizando el otro cliente
                 string jugada = "6 " + PLAYER + " 9";
-                MessageBox.Show(jugada);
+                
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(jugada);
                 server.Send(msg);
 			}
@@ -544,7 +542,7 @@ namespace inicio
                      * La duración de la partida no es un requerimiento por lo tanto de momento no la trataremos.
                      */
                     resultado = "7 3 1";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
 
@@ -587,7 +585,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 1";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -629,7 +627,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 1";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -672,7 +670,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 1";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -715,7 +713,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 1";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -758,7 +756,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 1";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -791,7 +789,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 1";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -824,7 +822,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 1";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -866,7 +864,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 0";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -908,7 +906,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 0";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -950,7 +948,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 0";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -992,7 +990,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 0";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -1034,7 +1032,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 0";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -1076,7 +1074,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 0";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -1109,7 +1107,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 0";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -1142,7 +1140,7 @@ namespace inicio
                 {
                     this.label15.Visible = true;
                     resultado = "7 3 0";
-                    MessageBox.Show(resultado);
+                    
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                     server.Send(msg);
                 }
@@ -1174,7 +1172,7 @@ namespace inicio
                         if (PLAYER == 1)
                         {
                             resultado = "7 2 1";
-                            MessageBox.Show(resultado);
+                            
                             byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
                             server.Send(msg);
                         }
@@ -1660,21 +1658,15 @@ namespace inicio
 		void Label15Click(object sender, System.EventArgs e)
 		{
 			base.Dispose();
-			//UsuarioVsUsuario f=new UsuarioVsUsuario();
-			//f.Show();
 		}
 		void Label16Click(object sender, System.EventArgs e)
 		{
 			base.Dispose();
-			//UsuarioVsUsuario f=new UsuarioVsUsuario();
-			//f.Show();
 		}
 		
 		void Label68Click(object sender, System.EventArgs e)
 		{
 			base.Dispose();
-			//UsuarioVsUsuario f=new UsuarioVsUsuario();
-			//f.Show();
 		}
         private void start()
         {

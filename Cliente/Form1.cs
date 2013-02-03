@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-//using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Net;
@@ -40,6 +39,7 @@ namespace inicio
         {
             //Creamos un IPEndPoint con el ip del servidor y puerto del servidor 
             //al que deseamos conectarnos
+            ERR = 0;
             IPAddress direc = IPAddress.Parse(comboBox1.Text);
             IPEndPoint ipep = new IPEndPoint(direc, 50001);
 

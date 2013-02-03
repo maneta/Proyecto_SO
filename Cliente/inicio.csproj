@@ -83,12 +83,21 @@
     <EmbeddedResource Include="Form4.resx">
       <DependentUpon>Form4.cs</DependentUpon>
     </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UsuarioVsUsuario.Designer.cs">
       <DependentUpon>UsuarioVsUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="UsuarioVsUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="UsuarioVsUsuario.resx">
       <DependentUpon>UsuarioVsUsuario.cs</DependentUpon>
     </EmbeddedResource>
