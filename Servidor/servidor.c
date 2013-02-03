@@ -244,7 +244,6 @@ int new_user(char buf[MAX])
 	   if(err!=0){
               printf("Se ha producido algun error en la introduccion de los datos %u %s \n",mysql_errno(conn),mysql_error(conn));
               return -1;
-	      exit(1);
               }
 	   else
 	   {
@@ -314,7 +313,6 @@ int tabla_partida(char buf[80])// Introduzco el usuario en la tabla que toca
        if(err!=0){
               printf("Se ha producido algun error en la introduccion de los datos %u %s \n",mysql_errno(conn),mysql_error(conn));
               return -1;
-              exit(1);
        }
        else
        {
@@ -348,7 +346,6 @@ int tabla_relacion(char buf[80], int id_partida)// Introduzco el usuario en la t
        if(err!=0){
               printf("Se ha producido algun error en la introduccion de los datos %u %s \n",mysql_errno(conn),mysql_error(conn));
               return -1;
-              exit(1);
        }
        else
        {
@@ -387,7 +384,6 @@ int identify_user(char buf[MAX])
        {
               printf ("Error al consultar datos de la base %u %s\n", mysql_errno(conn), mysql_error(conn));
               return(-1);
-              exit (1);
        }
 
        resultado = mysql_store_result (conn);
@@ -399,7 +395,6 @@ int identify_user(char buf[MAX])
        if(numresul==0){
     	      printf("No hay resultados! \n");
     	      return(-1);
-    	      exit(1);
        }
 
        // obtenemos la primera fila de resultados
@@ -422,7 +417,7 @@ int identify_user(char buf[MAX])
 }
 
 
-char* lista_fecha(char buf[MAX]){
+int lista_fecha(char buf[MAX]){
        int err;
        char user[80];
        char consulta[200];
@@ -449,8 +444,7 @@ char* lista_fecha(char buf[MAX]){
               /* Aqui se esta escribiendo en el socket usando el conector del mysql
               Revisar este write*/
               //write(conn,mensaje,strlen(mensaje));
-              return(msg);
-	      exit (1);
+              return(-1);
        }
        
        printf("Antes de resultado!");
@@ -464,8 +458,7 @@ char* lista_fecha(char buf[MAX]){
        // Si numresul=0 quiere decir que no hay ningun usuario con ese nombre
        if(numresul==0){
 	      printf("No hay resultados! \n");
-	      return(msg);
-	      exit(1);
+	      return(-1);
        }
 
        // obtenemos la primera fila de resultados
@@ -489,12 +482,11 @@ char* lista_fecha(char buf[MAX]){
        /* Aqui se esta escribiendo en el socket usando el conector del mysql
        Revisar este write*/
        //write(conn,mensaje,strlen(mensaje));
-       return (msg);
+       return (0);
     }
     
-char* lista_ganadores(char buf[MAX])
+int lista_jogadores(char buf[80],int con)
 {
-       // Caso 5, listar los ganadores de la partida:
        int err;
        char user[80];
        char consulta[200];
@@ -503,13 +495,13 @@ char* lista_ganadores(char buf[MAX])
        char password[200];
        int code;
        char *msg;
+       char mensaje_a_cliente[80];
 
-       //msg= &mensaje; WTF????
 
-
-       sscanf (buf, "%d %s %s", &code, user, password);
+       //sscanf (buf, "%d %s %s", &code, user, password);
+       strcpy (user,buf);
        printf("El usuario es: %s \n",user);
-       sprintf(consulta,"SELECT ganador FROM Partida ",user);
+       sprintf(consulta,"SELECT Nom FROM Relacion WHERE Id IN (SELECT Id FROM Relacion WHERE Nom='%s') AND Nom!='%s' GROUP BY Nom;",user,user);
        printf("La consulta es %s \n",consulta);
        err=mysql_query (conn,consulta);
        printf("err %d \n",err);
@@ -522,8 +514,7 @@ char* lista_ganadores(char buf[MAX])
               /* Aqui se esta escribiendo en el socket usando el conector del mysql
               Revisar este write*/
               //write(conn,mensaje,strlen(mensaje));
-	      return(msg);
-	      exit (1);
+	      return(-1);
        }
 
        printf("Antes de resultado!");
@@ -537,8 +528,7 @@ char* lista_ganadores(char buf[MAX])
        // Si numresul=0 quiere decir que no hay ningun usuario con ese nombre
        if(numresul==0){
               printf("No hay resultados! \n");
-              return(msg);
-	      exit(1);
+              return(-1);
        }
 
        // obtenemos la primera fila de resultados
@@ -553,19 +543,85 @@ char* lista_ganadores(char buf[MAX])
        {
               strcat(mensaje,row[0]);
               printf("%s \n",mensaje);
-              strcat(mensaje,"/");
+              strcat(mensaje,",");
               row = mysql_fetch_row (resultado); // Leemos otra fila
        }
        printf("Este es el mensaje %s \n",mensaje);
-
-       /* Aqui se esta escribiendo en el socket usando el conector del mysql
-       Revisar este write*/
-       //write(conn,mensaje,strlen(mensaje));
-       return (msg);
+       
+       sprintf (mensaje_a_cliente,"11 %s",mensaje);
+       write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
+       return(0);
 
     }
 
+int lista_ganadores(char buf[80],int con)
+{
+       int err;
+       char user[80];
+       char consulta[200];
+       int numresul;
+       char mensaje[200];
+       char password[200];
+       int code;
+       char *msg;
+       char mensaje_a_cliente[80];
 
+
+       //sscanf (buf, "%d %s %s", &code, user, password);
+       strcpy (user,buf);
+       printf("El usuario es: %s \n",user);
+       sprintf(consulta,"SELECT ganador FROM Partida WHERE Identificador IN(SELECT Id FROM Relacion WHERE Nom='%s');",user);
+       printf("La consulta es %s \n",consulta);
+       err=mysql_query (conn,consulta);
+       printf("err %d \n",err);
+
+       if (err!=0)
+       {
+	      printf ("Error al consultar datos de la base %u %s\n", mysql_errno(conn), mysql_error(conn));
+	      strcpy(mensaje,"No se ha podido realizar la consulta");
+	      
+              /* Aqui se esta escribiendo en el socket usando el conector del mysql
+              Revisar este write*/
+              //write(conn,mensaje,strlen(mensaje));
+	      return(-1);
+       }
+
+       printf("Antes de resultado!");
+       resultado = mysql_store_result (conn);
+       printf("Despues de resultado!");
+
+       // Obtenemos el numero de resultados
+       numresul=mysql_num_rows(resultado);
+       printf("Numero de resultado es:%d \n",numresul);
+
+       // Si numresul=0 quiere decir que no hay ningun usuario con ese nombre
+       if(numresul==0){
+              printf("No hay resultados! \n");
+              return(-1);
+       }
+
+       // obtenemos la primera fila de resultados
+       row = mysql_fetch_row (resultado);
+       printf("%s \n",row[0]);
+
+       //strcpy(mensaje,"Adversarios/");
+       // Evitamos que nos salgan caracteres 'raros' cuando concatenamos por primera vez.
+       strcpy(mensaje,"");
+
+       while (row!= NULL)
+       {
+              strcat(mensaje,row[0]);
+              printf("%s \n",mensaje);
+              strcat(mensaje,",");
+              row = mysql_fetch_row (resultado); // Leemos otra fila
+       }
+       printf("Este es el mensaje %s \n",mensaje);
+       
+       sprintf (mensaje_a_cliente,"10 %s",mensaje);
+       write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
+       return(0);
+
+    }
   //........... Funciones de las diferentes estructuras.....
 
 
@@ -644,14 +700,8 @@ void construir_lista (Tlista l, int con)
   	      sprintf (mensaje, "%s,%s",mensaje,l.usuarios[i].nombre);
   	      i++;
        }
-       //printf("El Valor de mensaje: %s \n", mensaje);
        sprintf (mensaje_a_cliente,"4 %s,",mensaje);
-       //printf("El Valor de mensaje_a_cliente: %s  y con: %d \n", mensaje_a_cliente,con);
        write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
-       //write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
-    /* RETORNAR LA LISTA Y HACER WRITE DESDE EL THREAD QUE TOCA
-     * BIZARRO MANDAR DUAS MENSSAGENS, DEUS ME LIVRE! 
-     */
 }
 
 int buscar (char nombre[20], Tlista l)
@@ -756,7 +806,6 @@ void *usuarios(void *conector)
                             /*con no existe en el contesto actual como variable, el argumento no se ha guardado
                              *en una variable local*/
                             sprintf (mensaje_a_cliente,"2 ");
-
                             write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
 	             }
 		     break;
@@ -790,9 +839,6 @@ void *usuarios(void *conector)
                      // Listamos a los jugadores conectados.
                             
                      construir_lista(mi_lista,con);
-                     //printf("aqui ya bloqueo\n")
-                     //printf("Este es el resultado --%s---",mensaje_respuesta);
-	             
               	     break;
               case 4:
                      /*Case responsable por recibir la peticion de invitacion
@@ -934,61 +980,22 @@ void *usuarios(void *conector)
                             write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
 	             }
                      break;
-              
-	    /*** DE MOMENTO LO UNICO QUE PODEMOS HACER SIN TENER THREADS EN EL CLIENTE
-             *   TODO LO QUE VIENE DEBAJO NO SE PUEDE IMPLEMENTAR SIN CONCURENCIA
-             *   AHORA TENIENDO EL VALOR DE CON BIEN PUESTO SACAR LA LISTA ES UNA TONTERIA
-             *   Y LA LISTA TIENE QUE SER GLOBAL
-             *
-              case 4:
-
-                     sprintf(mensaje2,"Estamos en el caso 4 \n");
-	             datos1=lista_fecha(buf);
-
-	             [con no existe en el contesto actual como variable, el argumento no se ha guardado
-                     en una variable local]
-
-                     write(con,datos1,strlen(datos1));
+              case 9:
+                     /*Case responsable por Listado de jugadores con los que he echado alguna partida.*/
+                     
+                     sscanf (buf,"%d %s", &borrador, usuario);
+                     resultado = lista_jogadores(usuario,con);
                      break;
-
-              case 5:
-
-                     printf("Estamos en el caso 5 \n");
-	             datos2=lista_ganadores(buf);
-	             [con no existe en el contesto actual como variable, el argumento no se ha guardado
-                     *en una variable local]
-                     write(con,datos2,strlen(datos2));
-	             break;
-
-	      case 6:
-	             printf("Estamos en el caso 6, a continuaciÃƒÂ³n construiremos la lista \n");
-	             construir_lista (mi_lista, msge_lista);
-	             sprintf (mensaje2,"La lista es: %s\n",msge_lista);
-	            [ con no existe en el contesto actual como variable, el argumento no se ha guardado
-                     en una variable local]
-                     //write(con,mensaje2,strlen(mensaje2));
-                     // Me he quedado aqui.....
-		     break;
-
-              case 7:
-	             printf("Estamos en el caso 7,buscaremos al usuario y lo elinaremos de la lista de conectados \n");
-	             [con no existe en el contesto actual como variable, el argumento no se ha guardado
-                     en una variable local]
-                     t.conexion=con;
-	             strcpy(t.nombre,usuario);
-	             printf("El usuario a eliminar es %s",usuario);
-	             int p= buscar (usuario, mi_lista);
-	             printf (" %s estÃƒÂ¡ en la posiciÃƒÂ³n %d\n",usuario,p);
-	             eliminar (p, &mi_lista);
-	      *       construir_lista (mi_lista, msge_lista);
-	      *       printf ("La lista es: %s\n",msge_lista);
-              *       sprintf (mensaje2,"La lista es: %s\n",msge_lista);
-	      *       [con no existe en el contesto actual como variable, el argumento no se ha guardado
-              *       en una variable local]
-              *       write(con,mensaje2,strlen(mensaje2));
-              *	     break;
-	      **********************************************************************************************/
-       
+              
+              case 10:
+                     /*Case responsable por Listado de ganadores de las partidas en las que he jugado.*/
+                     sscanf (buf,"%d %s", &borrador, usuario);
+                     resultado = lista_ganadores(usuario,con);
+                     break;
+              case 11:
+                     /*Case responsable por Lista de partidas jugadas por mi en un periodo de tiempo dado.*/
+                     
+                     break;
        /*fin del switch*/     
        } 
 
