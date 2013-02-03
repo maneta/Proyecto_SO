@@ -141,9 +141,22 @@ namespace inicio
                             MessageBox.Show("Usuario dado de baja correctamente");
                             this.us = trozos[1];
                             break;
+                        
                         case 9:
                             MessageBox.Show("Servidor Malo! No ha encontrado el usurio, Se va a quedar sin Donetes!");
                             break; 
+                        
+                        case 10:
+                            // Aqui Se recibe la lista de ganadores
+                            this.us = trozos[1];
+                            MessageBox.Show(us);
+                            break;
+                        
+                        case 11:
+                            // Aqui Se recibe la lista de jugadores
+                            this.us = trozos[1];
+                            MessageBox.Show(us);
+                            break;
                         case 100:
         
                             continuar = false;

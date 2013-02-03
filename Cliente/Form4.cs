@@ -125,7 +125,9 @@ namespace inicio
         }
         private void button2_Click(object sender, EventArgs e)
         {
-
+            String jogadores = "9 " + this.Text;
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(jogadores);
+            server.Send(msg);
         }
 
         private void Form4_Load(object sender, EventArgs e)
@@ -137,9 +139,9 @@ namespace inicio
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // String usuarioContraseña = "5 " + usuario2.Text;
-            //byte[] msg = System.Text.Encoding.ASCII.GetBytes(usuarioContraseña);
-            // server.Send(msg);
+            String ganadores = "10 " + this.Text;
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(ganadores);
+            server.Send(msg);
 
         }
 
