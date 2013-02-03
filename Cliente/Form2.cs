@@ -164,36 +164,48 @@ namespace inicio
         // Debemos introducir el mismo user y contraseña que al registrarte
         private void button1_Click(object sender, EventArgs e)
         {
-            String usuarioContraseña = "1 " + usuario.Text + " " + contraseña.Text;
-            byte[] msg = System.Text.Encoding.ASCII.GetBytes(usuarioContraseña);
-            server.Send(msg);
-
+            if (usuario.Text == "" || contraseña.Text == "")
+            {
+                MessageBox.Show("No has defindo Usuario o Contraseña");
+            }
+            else
+            {
+                String usuarioContraseña = "1 " + usuario.Text + " " + contraseña.Text;
+                byte[] msg = System.Text.Encoding.ASCII.GetBytes(usuarioContraseña);
+                server.Send(msg);
+            }
         }
         // Enviamos mensaje para registrarnos.
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Boolean control = true;
-            USER = usuario.Text;
-            String usuarioContraseña = "2 " + usuario.Text + " " + contraseña.Text;
-            byte[] msg = System.Text.Encoding.ASCII.GetBytes(usuarioContraseña);
-            server.Send(msg);
-
-            while (control)
+            if (usuario.Text == "" || contraseña.Text == "")
             {
-                if (LOGIN == -2)
+                MessageBox.Show("No has defindo Usuario o Contraseña");
+            }
+            else
+            {
+                Boolean control = true;
+                USER = usuario.Text;
+                String usuarioContraseña = "2 " + usuario.Text + " " + contraseña.Text;
+                byte[] msg = System.Text.Encoding.ASCII.GetBytes(usuarioContraseña);
+                server.Send(msg);
+
+                while (control)
                 {
-                    control = false;
-                    Thread.Sleep(100);
-                }
-                if (LOGIN == 0)
-                {
-                    control = false;
-                    this.Close();
+                    if (LOGIN == -2)
+                    {
+                        control = false;
+                        Thread.Sleep(100);
+                    }
+                    if (LOGIN == 0)
+                    {
+                        control = false;
+                        this.Close();
+                    }
                 }
             }
         }
-
         private void usuario_TextChanged(object sender, EventArgs e)
         {
 
