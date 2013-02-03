@@ -75,7 +75,8 @@ MYSQL_ROW row;
 pthread_mutex_t semaforo; 
 
 /*Contador Global threads*/
-int T; 
+int T;
+int IDPARTIDA;
 
 void crea_base_datos()
 {
@@ -253,24 +254,56 @@ int new_user(char buf[MAX])
 
 }
 
-int tabla_partida(char buf[MAX])// Introduzco el usuario en la tabla que toca
+int tabla_partida(char buf[80])// Introduzco el usuario en la tabla que toca
 {
        int err, code;
        char buf2[MAX];
        char consulta[MAX];
-       char user[40];
-       char password[20];
+       char user[80];
        int i;
 
 
-       // Cargamos lo que nos llega del cliente a traves de la variable buf a las variables code, user y password
-       sscanf (buf,"%d  %s  %s",&code, user, password);
-       printf("%s\n\n",buf);
+       strcpy(user,buf);
+       //sscanf (buf,"%d  %s  %s",&code, user, password);
 
        //insertamos los valores que hemos cargado en la variable user y password en la base de datos
        sprintf(consulta,"INSERT INTO Partida (ganador) VALUES ('%s');",user);
        printf("%s\n",consulta);
-       printf("%s\\ %s \n\n",user,password);
+       printf("%s\\  \n\n",user);
+
+       err=mysql_query(conn, consulta); //
+       //err=0;
+       printf("%d",err);
+       printf("%d",err);
+       if(err!=0){
+              printf("Se ha producido algun error en la introduccion de los datos %u %s \n",mysql_errno(conn),mysql_error(conn));
+              return -1;
+              exit(1);
+       }
+       else
+       {
+              return 0;
+              printf("Hemos anadido al usuario correctamente \n");
+       }
+}
+
+int tabla_relacion(char buf[80], int id_partida)// Introduzco el usuario en la tabla que toca
+{
+       int err, id;
+       char buf2[MAX];
+       char consulta[MAX];
+       char user[80];
+       int i;
+
+
+       strcpy(user,buf);
+       id = id_partida;
+       //sscanf (buf,"%d  %s  %s",&code, user, password);
+
+       //insertamos los valores que hemos cargado en la variable user y password en la base de datos
+       sprintf(consulta,"INSERT INTO Relacion (Nom,Id) VALUES ('%s',%d);",user,id);
+       printf("%s\n",consulta);
+       printf("%s\\ %d \n\n",user,id);
 
        err=mysql_query(conn, consulta); //
        //err=0;
@@ -633,7 +666,7 @@ void *usuarios(void *conector)
 {
 
        printf("dentro de Usuarios \n");
-       int code,borrador,aceptacion,jugador,jugada;
+       int code,borrador,aceptacion,jugador,jugada,resultado_partida,ganador;
        int nchar;
        static char buf[MAX];
        //char mensaje2[MAX];
@@ -803,7 +836,7 @@ void *usuarios(void *conector)
                             
                             /*Caso de mensaje destinado a invitado
                             * Se enviará un mensaje al cliente del tipo 7 1 [1..9]
-                            * En el cliente se pasa la x = true;
+                            * En el cliente se pasa la o = true;
                             */
                             strcpy(invitado,PLAYERLIST.jugadores[1].nombre);
                             index = buscar(invitado,mi_lista);
@@ -811,7 +844,46 @@ void *usuarios(void *conector)
                             sprintf (mensaje_a_cliente,"7 0 %d",jugada);
                             write(socket_invitado,mensaje_a_cliente,strlen(mensaje_a_cliente));
                      }
+              
+              case 7:
+                     /*Case responsable por actualizar la informacion de las tablas relacionadas
+                     * a las partidas, en concreto la tabla partida y la tabla relacion.
+                     * La idea es que se actualicen las tablas solamente cuando haya un ganador.
+                     * Los empates no se actualizan, no habrá una partida en caso de empate.
+                     * En el final de cada partida se debe limpiar la lista de jugadores.
+                     * Esto se hace llamando a la función incializa_players(&PLAYERLIST).
+                     * Se va recibir un mensaje del tipo 7 [2..3] [0..1]
+                     * [2..3]-> 2 en caso de que sea un empate, solamente limpiamos la lista de jugadores.
+                     *       -> 3 hubo un ganador tenemos que limpiar la lista de jugadores y actualizar la BD's.
+                     * [0..1]-> 0 En caso de que sea un 0 ha ganado el jugador invitado PLAYERLIST.jugadores[1]
+                     *       -> 1 Ha ganado el jugador invitante PLAYERLIST.jugadores[0]
+                     * La duración de la partida no es un requerimiento por lo tanto de momento no la trataremos.
+                     */
                      
+                     sscanf (buf,"%d %d %d", &borrador,&resultado_partida,&ganador);
+                     if(resultado_partida == 2){
+                            inicializa_players(&PLAYERLIST);
+                     }
+                     if(resultado_partida == 3){
+                            if(ganador == 1){
+                                   strcpy(invitante,PLAYERLIST.jugadores[0].nombre);
+                                   tabla_partida(invitante);
+                                   IDPARTIDA++;
+                                   strcpy(invitado,PLAYERLIST.jugadores[1].nombre);
+                                   tabla_relacion(invitante,IDPARTIDA);
+                                   tabla_relacion(invitado,IDPARTIDA);
+                            }
+                            if(ganador == 0){
+                                   strcpy(invitado,PLAYERLIST.jugadores[1].nombre);
+                                   tabla_partida(invitado);
+                                   IDPARTIDA++;
+                                   strcpy(invitante,PLAYERLIST.jugadores[0].nombre);
+                                   tabla_relacion(invitante,IDPARTIDA);
+                                   tabla_relacion(invitado,IDPARTIDA);
+                            }
+                            inicializa_players(&PLAYERLIST);
+                     }
+                     break;
               
 	    /*** DE MOMENTO LO UNICO QUE PODEMOS HACER SIN TENER THREADS EN EL CLIENTE
              *   TODO LO QUE VIENE DEBAJO NO SE PUEDE IMPLEMENTAR SIN CONCURENCIA
@@ -902,6 +974,7 @@ int main(void) {
        int thread_p;
        char mensaje_a_cliente[50];
        
+       IDPARTIDA = 0;
        T = 0;
        pthread_t Pthread[MAX_THREADS];
        inicializa_lista (&mi_lista);
