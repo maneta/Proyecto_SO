@@ -254,6 +254,42 @@ int new_user(char buf[MAX])
 
 }
 
+int baja_user(char buf[MAX])
+{
+
+
+       int err, code;
+       char buf2[MAX];
+       char consulta[MAX];
+       char user[40];
+       char password[20];
+       int i;
+
+       // Cargamos lo que nos llega del cliente a traves de la variable buf a las variables code, user y password
+       sscanf (buf,"%d  %s  %s",&code, user, password); 
+       printf("%s\n\n",buf);
+       //insertamos los valores que hemos cargado en la variable user y password en la base de datos
+       sprintf(consulta,"DELETE FROM Jugador WHERE Nombre= '%s';",user); 
+       printf("%s\n",consulta);
+       printf("%s\\ %s \n\n",user,password);
+
+       err=mysql_query(conn, consulta); 
+       //err=0;
+       printf("%d",err);
+       printf("%d",err);
+	   if(err!=0){
+              printf("Se ha producido algun error en la introduccion de los datos %u %s \n",mysql_errno(conn),mysql_error(conn));
+              return -1;
+	      exit(1);
+              }
+	   else
+	   {
+	      return 0;
+	      printf("Hemos anadido al usuario correctamente \n");
+	   }
+
+}
+
 int tabla_partida(char buf[80])// Introduzco el usuario en la tabla que toca
 {
        int err, code;
@@ -883,6 +919,20 @@ void *usuarios(void *conector)
                             }
                             inicializa_players(&PLAYERLIST);
                      }
+                     break;
+              case 8:
+                     /*Case Responsable por la Baja de Usuario*/
+                     
+                     resultado=baja_user(buf);
+	             if(resultado==0){
+                            pthread_mutex_lock(&semaforo);
+	                    sprintf (mensaje_a_cliente,"8 ");
+                            write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
+                            pthread_mutex_unlock(&semaforo); 
+                     }else{
+                            sprintf (mensaje_a_cliente,"9 ");
+                            write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
+	             }
                      break;
               
 	    /*** DE MOMENTO LO UNICO QUE PODEMOS HACER SIN TENER THREADS EN EL CLIENTE
