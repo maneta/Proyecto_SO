@@ -417,48 +417,46 @@ int identify_user(char buf[MAX])
 }
 
 
-int lista_fecha(char buf[MAX]){
+int lista_fecha(char buf[200], int con){
        int err;
-       char user[80];
        char consulta[200];
        int numresul;
        char mensaje[200];
        char password[200];
        int code;
        char *msg;
+       char mensaje_a_cliente[80];
 
-       // msg= &mensaje; WTF???
 
-
-       sscanf (buf, "%d %s %s", &code, user, password);
-       printf("El usuario es: %s \n",user);
-       sprintf(consulta,"SELECT fecha FROM Partida ",user);
+       //sscanf (buf, "%d %s %s", &code, user, password);
+       strcpy (consulta,buf);
        printf("La consulta es %s \n",consulta);
        err=mysql_query (conn,consulta);
        printf("err %d \n",err);
 
        if (err!=0)
        {
-              printf ("Error al consultar datos de la base %u %s\n", mysql_errno(conn), mysql_error(conn));
-              strcpy(mensaje,"No se ha podido realizar la consulta");
+	      printf ("Error al consultar datos de la base %u %s\n", mysql_errno(conn), mysql_error(conn));
+	      strcpy(mensaje,"No se ha podido realizar la consulta");
+	      
               /* Aqui se esta escribiendo en el socket usando el conector del mysql
               Revisar este write*/
               //write(conn,mensaje,strlen(mensaje));
-              return(-1);
+	      return(-1);
        }
-       
+
        printf("Antes de resultado!");
        resultado = mysql_store_result (conn);
        printf("Despues de resultado!");
-       
+
        // Obtenemos el numero de resultados
        numresul=mysql_num_rows(resultado);
        printf("Numero de resultado es:%d \n",numresul);
 
        // Si numresul=0 quiere decir que no hay ningun usuario con ese nombre
        if(numresul==0){
-	      printf("No hay resultados! \n");
-	      return(-1);
+              printf("No hay resultados! \n");
+              return(-1);
        }
 
        // obtenemos la primera fila de resultados
@@ -471,19 +469,17 @@ int lista_fecha(char buf[MAX]){
 
        while (row!= NULL)
        {
-	      strcat(mensaje,row[0]);
-	      printf("%s \n",mensaje);
-	      strcat(mensaje,"/");
-	      row = mysql_fetch_row (resultado); // Leemos otra fila
+              strcat(mensaje,row[0]);
+              printf("%s \n",mensaje);
+              strcat(mensaje,",");
+              row = mysql_fetch_row (resultado); // Leemos otra fila
        }
-       
        printf("Este es el mensaje %s \n",mensaje);
        
-       /* Aqui se esta escribiendo en el socket usando el conector del mysql
-       Revisar este write*/
-       //write(conn,mensaje,strlen(mensaje));
-       return (0);
-    }
+       sprintf (mensaje_a_cliente,"12 %s",mensaje);
+       write(con,mensaje_a_cliente,strlen(mensaje_a_cliente));
+       return(0);    
+}
     
 int lista_jogadores(char buf[80],int con)
 {
@@ -758,6 +754,11 @@ void *usuarios(void *conector)
        //char mensaje2[MAX];
        int resultado;
        char usuario [80];
+       char fecha_inicial [25];
+       char fecha_final [25];
+       char hora_final [25];
+       char hora_inicial [25];
+       char consulta[200];
        char invitante [80];
        char invitado [80];
        char mensaje_a_cliente[50];
@@ -994,7 +995,11 @@ void *usuarios(void *conector)
                      break;
               case 11:
                      /*Case responsable por Lista de partidas jugadas por mi en un periodo de tiempo dado.*/
-                     
+                     sscanf (buf,"%d %s %s %s %s %s", &borrador, usuario, fecha_inicial, hora_inicial, fecha_final, hora_final);
+                     //printf ("Valor do que os datetimepicker mandad %s  %s %s %s %s \n",usuario,fecha_inicial,hora_inicial,fecha_final,hora_final);
+                     sprintf (consulta,"SELECT Identificador FROM Partida WHERE Identificador IN(SELECT Id FROM Relacion WHERE Nom='%s') AND fecha BETWEEN '%s %s' AND '%s %s';",usuario,fecha_inicial,hora_inicial,fecha_final,hora_final);
+                     lista_fecha(consulta,con);
+                     //resultado = lista_ganadores(usuario,con);
                      break;
        /*fin del switch*/     
        } 
