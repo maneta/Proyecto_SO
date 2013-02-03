@@ -198,5 +198,39 @@ namespace inicio
                 server.Send(msg);
             }
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            DateTime result = dateTimePicker1.Value;
+            String fecha_inicial = result.ToString();
+            String [] constructor = fecha_inicial.Split(' ');
+            String[] sub_fecha = constructor[0].Split('/');
+            fecha_inicial = sub_fecha[2] + "-" + sub_fecha[1] + "-" + sub_fecha[0] + " " + constructor[1];
+            
+            DateTime result2 = dateTimePicker2.Value;
+            String fecha_final = result2.ToString();
+            String[] constructor2 = fecha_final.Split(' ');
+            String[] sub_fecha2 = constructor2[0].Split('/');
+            fecha_final = sub_fecha2[2] + "-" + sub_fecha2[1] + "-" + sub_fecha2[0] + " " + constructor2[1];
+            
+            String datetime = "11 " + this.Text + " " + fecha_inicial + " " + fecha_final;
+            MessageBox.Show(datetime);
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(datetime);
+            server.Send(msg);
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -157,6 +157,13 @@ namespace inicio
                             this.us = trozos[1];
                             MessageBox.Show(us);
                             break;
+                        
+                        case 12:
+                            // Aqui Se recibe la lista de jugadores
+                            this.us = trozos[1];
+                            MessageBox.Show(us);
+                            break;
+                        
                         case 100:
         
                             continuar = false;
