@@ -25,7 +25,7 @@ namespace inicio
 
         public void SetInvitacion(string text)
         {
-            string invitacion = "Invitacio de " + text;
+            string invitacion = "Invitación de " + text;
             string header = "Aceptas Jugar " + this.Text + "?";
             DialogResult res= MessageBox.Show(invitacion, header, MessageBoxButtons.YesNo);
 
@@ -80,20 +80,48 @@ namespace inicio
             {
                 //dataGridView1.Rows.Clear();
                 this.dataGridView1.ColumnCount = 1;
-                MessageBox.Show(text);
                 string[] trozos = text.Split(',');
                 List<string> Conectados = new List<string>(trozos);
                 index = Conectados.Count;
                 index--;
                 this.dataGridView1.RowCount = index;
                 Conectados.RemoveAt(index);
-                //MessageBox.Show(text);
                 foreach (string s in Conectados)
                 {
                     dataGridView1[0, i].Value = s;
                     dataGridView1.ClearSelection();
                     i++;
-                    //j++;
+                }
+            }
+
+        }
+
+        public void SetLista2(string text)
+        {
+
+            int i = 0;
+            int index = 0;
+            if (dataGridView1.InvokeRequired)
+            {
+                SetListaCallback d = new SetListaCallback(SetLista2);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                //dataGridView1.Rows.Clear();
+                this.dataGridView2.ColumnCount = 1;
+                string[] trozos = text.Split(',');
+                List<string> Conectados = new List<string>(trozos);
+                index = Conectados.Count;
+                index--;
+                this.dataGridView2.RowCount = index;
+                Conectados.RemoveAt(index);
+                //MessageBox.Show(text);
+                foreach (string s in Conectados)
+                {
+                    dataGridView2[0, i].Value = s;
+                    dataGridView2.ClearSelection();
+                    i++;
                 }
             }
 
@@ -223,7 +251,6 @@ namespace inicio
             fecha_final = sub_fecha2[2] + "-" + sub_fecha2[1] + "-" + sub_fecha2[0] + " " + constructor2[1];
             
             String datetime = "11 " + this.Text + " " + fecha_inicial + " " + fecha_final;
-            MessageBox.Show(datetime);
             byte[] msg = System.Text.Encoding.ASCII.GetBytes(datetime);
             server.Send(msg);
         }

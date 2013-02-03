@@ -149,19 +149,19 @@ namespace inicio
                         case 10:
                             // Aqui Se recibe la lista de ganadores
                             this.us = trozos[1];
-                            MessageBox.Show(us);
+                            consultas.SetLista2(us);
                             break;
                         
                         case 11:
                             // Aqui Se recibe la lista de jugadores
                             this.us = trozos[1];
-                            MessageBox.Show(us);
+                            consultas.SetLista2(us);
                             break;
                         
                         case 12:
                             // Aqui Se recibe la lista de jugadores
                             this.us = trozos[1];
-                            MessageBox.Show(us);
+                            consultas.SetLista2(us);
                             break;
                         
                         case 100:
