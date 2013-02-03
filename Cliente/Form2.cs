@@ -137,6 +137,13 @@ namespace inicio
                             consultas.SetJugada(player,casilla);
                             break;
                         
+                        case 8: 
+                            MessageBox.Show("Usuario dado de baja correctamente");
+                            this.us = trozos[1];
+                            break;
+                        case 9:
+                            MessageBox.Show("Servidor Malo! No ha encontrado el usurio, Se va a quedar sin Donetes!");
+                            break; 
                         case 100:
         
                             continuar = false;
@@ -174,7 +181,6 @@ namespace inicio
                 server.Send(msg);
             }
         }
-        // Enviamos mensaje para registrarnos.
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -208,6 +214,20 @@ namespace inicio
         private void usuario_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (usuario.Text == "" || contraseña.Text == "")
+            {
+                MessageBox.Show("No has defindo Usuario o Contraseña");
+            }
+            else
+            {
+                String usuarioContraseña = "8 " + usuario.Text + " " + contraseña.Text;
+                byte[] msg = System.Text.Encoding.ASCII.GetBytes(usuarioContraseña);
+                server.Send(msg);
+            }
         }
     }
 }
