@@ -17,7 +17,7 @@ namespace inicio
         Socket server;
         //Form3 users;
         Form4 consultas;
-        UsuarioVsUsuario jogo;
+        //UsuarioVsUsuario jogo;
         
         string us;
         string USER;

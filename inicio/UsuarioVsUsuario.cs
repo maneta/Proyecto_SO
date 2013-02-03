@@ -506,8 +506,13 @@ namespace inicio
 		
 		public  void analiza()
 		{
-			
-			if(B1=="x"&&B2=="x"&&B3=="x")
+			/*Solamente los Jugadores 1(X), que son los invitantes envíaran mensajes al servidor
+             *Actualizado el final de la partida, encaso de empate solamente limpiamos la lista
+             *de jugadores en el servidor en caso 
+             */
+            string resultado;
+
+            if(B1=="x"&&B2=="x"&&B3=="x")
 			{
                 if (label3.InvokeRequired)
                 {
@@ -531,6 +536,18 @@ namespace inicio
                 if (PLAYER == 1)
                 {
                     this.label15.Visible = true;
+                    /* Se va enviar un mensaje del tipo 7 [2..3] [0..1]
+                     * [2..3]-> 2 en caso de que sea un empate, solamente limpiamos la lista de jugadores.
+                     *       -> 3 hubo un ganador tenemos que limpiar la lista de jugadores y actualizar la BD's.
+                     * [0..1]-> 0 En caso de que sea un 0 ha ganado el jugador invitado PLAYERLIST.jugadores[1]
+                     *       -> 1 Ha ganado el jugador invitante PLAYERLIST.jugadores[0]
+                     * La duración de la partida no es un requerimiento por lo tanto de momento no la trataremos.
+                     */
+                    resultado = "7 3 1";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
+
                 }
                 if (PLAYER == 0)
                 {
@@ -569,6 +586,10 @@ namespace inicio
                 if (PLAYER == 1)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 1";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 0)
                 {
@@ -607,6 +628,10 @@ namespace inicio
                 if (PLAYER == 1)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 1";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 0)
                 {
@@ -646,6 +671,10 @@ namespace inicio
                 if (PLAYER == 1)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 1";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 0)
                 {
@@ -685,6 +714,10 @@ namespace inicio
                 if (PLAYER == 1)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 1";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 0)
                 {
@@ -724,6 +757,10 @@ namespace inicio
                 if (PLAYER == 1)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 1";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 0)
                 {
@@ -753,6 +790,10 @@ namespace inicio
                 if (PLAYER == 1)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 1";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 0)
                 {
@@ -782,6 +823,10 @@ namespace inicio
                 if (PLAYER == 1)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 1";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 0)
                 {
@@ -820,6 +865,10 @@ namespace inicio
                 if (PLAYER == 0)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 0";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 1)
                 {
@@ -858,6 +907,10 @@ namespace inicio
                 if (PLAYER == 0)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 0";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 1)
                 {
@@ -896,6 +949,10 @@ namespace inicio
                 if (PLAYER == 0)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 0";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 1)
                 {
@@ -934,6 +991,10 @@ namespace inicio
                 if (PLAYER == 0)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 0";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 1)
                 {
@@ -972,6 +1033,10 @@ namespace inicio
                 if (PLAYER == 0)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 0";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 1)
                 {
@@ -1010,6 +1075,10 @@ namespace inicio
                 if (PLAYER == 0)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 0";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 1)
                 {
@@ -1039,6 +1108,10 @@ namespace inicio
                 if (PLAYER == 0)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 0";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 1)
                 {
@@ -1068,6 +1141,10 @@ namespace inicio
                 if (PLAYER == 0)
                 {
                     this.label15.Visible = true;
+                    resultado = "7 3 0";
+                    MessageBox.Show(resultado);
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                    server.Send(msg);
                 }
                 if (PLAYER == 1)
                 {
@@ -1094,6 +1171,13 @@ namespace inicio
                     else
                     {
                         this.label68.Visible = true;
+                        if (PLAYER == 1)
+                        {
+                            resultado = "7 2 1";
+                            MessageBox.Show(resultado);
+                            byte[] msg = System.Text.Encoding.ASCII.GetBytes(resultado);
+                            server.Send(msg);
+                        }
                     }
                     
                 }

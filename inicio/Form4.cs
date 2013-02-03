@@ -17,7 +17,7 @@ namespace inicio
         Socket server;
         //DataTable Lista = new DataTable();
         //DataRow Fila;
-        string INVITADO;
+        string INVITADO = "";
         UsuarioVsUsuario jogo;
         List<UsuarioVsUsuario> jogos = new List<UsuarioVsUsuario>();
 
@@ -70,7 +70,6 @@ namespace inicio
         {
             
             int i = 0;
-            int j = 0;
             int index = 0;
             if (dataGridView1.InvokeRequired)
             {
@@ -185,11 +184,17 @@ namespace inicio
         private void button6_Click(object sender, EventArgs e)
         {
             /*Boton Responsable por enviar la peticion (4) de invitacion*/
-            String invitacion = "4 " + this.Text + " " + INVITADO;
-            MessageBox.Show(invitacion);
-            byte[] msg = System.Text.Encoding.ASCII.GetBytes(invitacion);
-            server.Send(msg);
-
+            if (INVITADO == this.Text || INVITADO == "")
+            {
+                MessageBox.Show("No Puedes Invitar a ti Mismo");
+            }
+            else
+            {
+                String invitacion = "4 " + this.Text + " " + INVITADO;
+                MessageBox.Show(invitacion);
+                byte[] msg = System.Text.Encoding.ASCII.GetBytes(invitacion);
+                server.Send(msg);
+            }
         }
     }
 }
